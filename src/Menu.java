@@ -8,8 +8,12 @@ public class Menu {
         System.out.println("0. Exit");
     }
 
-    void displayRegisterMenu(int accountType) {
-
+    void displayRegisterMenu() {
+        System.out.println("Register:");
+        System.out.println("1. Personal Account (£0)");
+        System.out.println("2. Business Account (£99+)");
+        System.out.println("3. Business+ Account (£399+)");
+        System.out.println("0. Return");
     }
 
     void displayLoginMenu() {

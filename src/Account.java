@@ -3,46 +3,24 @@ import utils.InputReader;
 
 public class Account {
 
-    String accountType, subscriptionType;
-    int monthlyVolume, dailyVolume;
+    HashMap<String, String> userDetails = new HashMap<>();
 
-    // Constructor - no arguments
-    public Account() {
-        accountType = "user";
-        dailyVolume = 1;
-        monthlyVolume = 31;
-        subscriptionType = "none";
+    InputReader input = new InputReader();
+
+    public Account(String accountType) {
+        // Capture email and password (used for all accounts)
+        userDetails.put( "email", input.readValidEmail("Enter a valid email address") );
+        userDetails.put( "password", input.readStringWithLength("Enter a password",8) );
+        userDetails.put( "account type", accountType);
     }
 
-    public Account(int accountValue, int requiredQuota, String paymentPlan) {
-        if (accountValue == 0) {
-            accountType = "user";
-            dailyVolume = 1;
-            monthlyVolume = 31;
-            subscriptionType = "none";
-        } else if (accountValue == 1) {
-            accountType = "business";
-            monthlyVolume = requiredQuota;
-            dailyVolume = monthlyVolume;
-            subscriptionType = paymentPlan;
-        } else if (accountValue == 2) {
-            accountType = "businessplus";
-            monthlyVolume = requiredQuota;
-            dailyVolume = monthlyVolume;
-            subscriptionType = paymentPlan;
-        } else {
-            accountType = "user";
-            dailyVolume = 1;
-            monthlyVolume = 31;
-            subscriptionType = "none";
-        }
+    public void displayUserDetails() {
+        System.out.println(this.userDetails);
+
     }
 
-    public HashMap<String, String> registerDetails() {
-        HashMap<String, String> userDetails = new HashMap<>();
+    public void writeUserDetailsToFile() {
 
-        return userDetails;
     }
-
 
 }

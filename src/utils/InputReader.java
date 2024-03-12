@@ -10,10 +10,10 @@ public class InputReader {
         inputObject = new Scanner(System.in);
     }
 
+    // Read integers and validate against a list of expected values
     public int readValidInt(String prompt, ArrayList<Integer> validValues) {
         int value = 0;
         boolean valid = false;
-
         do {
             try {
                 System.out.println(prompt);
@@ -29,6 +29,7 @@ public class InputReader {
         return value;
     }
 
+    // Read strings and validate against a minimum length
     public String readStringWithLength(String prompt, int minLength) {
         boolean valid = false;
 
@@ -45,9 +46,9 @@ public class InputReader {
         return inputString;
     }
 
+    // Read strings and validate as a valid email address
     public String readValidEmail(String prompt) {
         boolean valid = false;
-
         String inputString = null;
         do {
             try {
@@ -61,6 +62,7 @@ public class InputReader {
         return inputString;
     }
 
+    // Verify an integer is in a range of values
     public boolean verifyIntChoiceInRange(int choice, ArrayList<Integer> validValues) {
         if (!validValues.contains(choice)) {
             throw new InputMismatchException("Choice not found in list of valid values");
@@ -68,6 +70,7 @@ public class InputReader {
         return true;
     }
 
+    // Verify a string is at least a minimum length
     public boolean verifyStringLength(String inputString, int minLength) throws Exception {
         if (inputString.length() < minLength) {
             throw new Exception("Error: Must be at least " + minLength + " characters. Please try again");
@@ -75,11 +78,11 @@ public class InputReader {
         return true;
     }
 
+    // Verify a string follows a given email format (regular expression)
     public boolean verifyEmailFormat(String inputString) throws Exception {
         if (!inputString.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\\.{1}[A-Za-z]{2,}\\b")) {
             throw new Exception("Error: Invalid email format");
         }
         return true;
     }
-
 }
