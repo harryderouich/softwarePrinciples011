@@ -20,7 +20,7 @@ public class Account {
     }
 
     public void writeUserDetailsToFile() {
-
+        System.out.println("Writing account to file");
     }
 
 }

@@ -36,6 +36,8 @@ public class Main {
 
                             System.out.println("Register a Personal Account");
                             PersonalAccount account = new PersonalAccount();
+
+                            account.writeUserDetailsToFile(); //test
                             break;
                         case 2:
                             System.out.println("Register a Business Account");
