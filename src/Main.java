@@ -1,6 +1,5 @@
 import utils.InputReader;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,11 +7,9 @@ public class Main {
     public static void main(String[] args) {
 
         boolean quit = false;
-        boolean returnPrevious = false;
 
         Menu myMenu = new Menu();
         InputReader input = new InputReader();
-
 
         while (!quit) {
 
@@ -31,16 +28,12 @@ public class Main {
 
                     switch (registerChoice) {
                         case 1:
-                            // todo remove
-                            System.out.println(new String(new char[50]).replace("\0", "\r\n"));
-
                             System.out.println("Register a Personal Account");
-                            PersonalAccount account = new PersonalAccount();
-
-                            account.writeUserDetailsToFile(); //test
+                            PersonalAccount pAccount = new PersonalAccount();
                             break;
                         case 2:
                             System.out.println("Register a Business Account");
+                            BusinessAccount bAccount = new BusinessAccount();
                             break;
                         case 3:
                             System.out.println("Register a Business+ Account");
@@ -49,7 +42,7 @@ public class Main {
 
                     break;
                 case 2:
-                    System.out.println("Login");
+                    myMenu.displayLoginMenu();
                     break;
                 case 3:
                     System.out.println("Help");
