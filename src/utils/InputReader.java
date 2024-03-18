@@ -10,13 +10,29 @@ public class InputReader {
         inputObject = new Scanner(System.in);
     }
 
+    // Read strings and validate against not being empty
+    public String readString(String prompt) {
+        boolean valid = false;
+        String inputString = null;
+        do {
+            try {
+                System.out.print(prompt + " ");
+                inputString = inputObject.nextLine();
+                valid = verifyStringLength(inputString, 1);
+            } catch (Exception e) {
+                System.out.println("Error: " + prompt);
+            }
+        } while (!valid);
+        return inputString;
+    }
+
     // Read integers and validate against a list of expected values
     public int readValidInt(String prompt, ArrayList<Integer> validValues) {
         int value = 0;
         boolean valid = false;
         do {
             try {
-                System.out.println(prompt);
+                System.out.print(prompt + " ");
                 String input = inputObject.nextLine();
                 value = Integer.parseInt(input);
                 valid = verifyIntChoiceInRange(value, validValues);
@@ -32,11 +48,10 @@ public class InputReader {
     // Read strings and validate against a minimum length
     public String readStringWithLength(String prompt, int minLength) {
         boolean valid = false;
-
         String inputString = null;
         do {
             try {
-                System.out.println(prompt + " (min length " + minLength + " chars)");
+                System.out.print(prompt + " (min length " + minLength + " chars): ");
                 inputString = inputObject.nextLine();
                 valid = verifyStringLength(inputString, minLength);
             } catch (Exception e) {
@@ -52,7 +67,7 @@ public class InputReader {
         String inputString = null;
         do {
             try {
-                System.out.println(prompt);
+                System.out.print(prompt + " ");
                 inputString = inputObject.nextLine();
                 valid = verifyEmailFormat(inputString);
             } catch (Exception e) {
@@ -80,7 +95,7 @@ public class InputReader {
 
     // Verify a string follows a given email format (regular expression)
     public boolean verifyEmailFormat(String inputString) throws Exception {
-        if (!inputString.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\\.{1}[A-Za-z]{2,}\\b")) {
+        if (!inputString.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\\.{1}[A-Za-z]{2,}\\.?[A-Za-z?]*\\b")) {
             throw new Exception("Error: Invalid email format");
         }
         return true;
