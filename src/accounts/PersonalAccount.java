@@ -1,3 +1,5 @@
+package accounts;
+
 public class PersonalAccount extends Account {
 
     public PersonalAccount() {

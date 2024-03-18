@@ -1,3 +1,5 @@
+package accounts;
+
 import java.util.HashMap;
 import utils.InputReader;
 

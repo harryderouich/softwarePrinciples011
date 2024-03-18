@@ -1,4 +1,6 @@
+import accounts.*;
 import utils.InputReader;
+import utils.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +15,7 @@ public class Main {
 
         while (!quit) {
 
-            // Main Menu
+            // Main utils.Menu
             myMenu.displayMainMenu();
 
             ArrayList<Integer> mmValidValues = new ArrayList<>(Arrays.asList(1, 2, 3, 0));
@@ -33,10 +35,11 @@ public class Main {
                             break;
                         case 2:
                             System.out.println("Register a Business Account");
-                            BusinessAccount bAccount = new BusinessAccount();
+                            BusinessAccount bAccount = new BusinessAccount("business");
                             break;
                         case 3:
                             System.out.println("Register a Business+ Account");
+                            BusinessAccount bpAccount = new BusinessAccount("businessPlus");
                             break;
                         } // else (0) return
 

@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class InputReader {
     Scanner inputObject;
+
     public InputReader() {
         inputObject = new Scanner(System.in);
     }
@@ -45,6 +46,22 @@ public class InputReader {
         return value;
     }
 
+    // Read strings and validate against a list of expected values
+    public String readValidString(String prompt, ArrayList<String> validValues) {
+        boolean valid = false;
+        String value = null;
+        do {
+            try {
+                System.out.print(prompt + " ");
+                value = inputObject.nextLine();
+                valid = verifyStringChoiceInRange(value, validValues);
+            } catch (InputMismatchException e) {
+                System.out.println("Sorry, please enter one of the valid choices: " + validValues);
+            }
+        } while (!valid);
+        return value;
+    }
+
     // Read strings and validate against a minimum length
     public String readStringWithLength(String prompt, int minLength) {
         boolean valid = false;
@@ -77,8 +94,33 @@ public class InputReader {
         return inputString;
     }
 
+    // Read 16 digit card number
+    public String readCardNumber(String prompt) {
+        boolean valid = false;
+        String inputString = null;
+        do {
+            try {
+                System.out.print(prompt + ": ");
+                inputString = inputObject.nextLine();
+                valid = verifyCardNumber(inputString);
+            } catch (Exception e) {
+                System.out.println("Error: Card number invalid, please try again.");
+            }
+        } while (!valid);
+        return inputString;
+    }
+
+
     // Verify an integer is in a range of values
     public boolean verifyIntChoiceInRange(int choice, ArrayList<Integer> validValues) {
+        if (!validValues.contains(choice)) {
+            throw new InputMismatchException("Choice not found in list of valid values");
+        }
+        return true;
+    }
+
+    // Verify a String is in a range of values
+    public boolean verifyStringChoiceInRange(String choice, ArrayList<String> validValues) {
         if (!validValues.contains(choice)) {
             throw new InputMismatchException("Choice not found in list of valid values");
         }
@@ -100,4 +142,14 @@ public class InputReader {
         }
         return true;
     }
+
+    // Verify a card number has 16 digits
+    public boolean verifyCardNumber(String inputString) throws Exception {
+        String sanitisedCardNumberString = inputString.replaceAll("\\D","");
+        if (!(sanitisedCardNumberString.length() == 16)) {
+            throw new Exception("Error: Invalid card number (length not 16)");
+        }
+        return true;
+    }
+
 }
