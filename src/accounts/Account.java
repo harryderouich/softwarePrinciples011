@@ -5,7 +5,7 @@ import utils.InputReader;
 
 public class Account {
 
-    HashMap<String, String> userDetails = new HashMap<>();
+    public HashMap<String, String> userDetails = new HashMap<>();
 
     InputReader input = new InputReader();
 
@@ -13,16 +13,23 @@ public class Account {
         // Capture email and password (used for all accounts)
         userDetails.put( "email", input.readValidEmail("Enter a valid email address") );
         userDetails.put( "password", input.readStringWithLength("Enter a password",8) );
-        userDetails.put( "account type", accountType);
+        userDetails.put( "accountType", accountType);
+    }
+
+    // New constructor to accept user details from a HashMap
+    public Account(HashMap<String, String> userDetails) {
+        this.userDetails.putAll(userDetails);
     }
 
     public void displayUserDetails() {
-        System.out.println(this.userDetails);
-
+        // Print the contents of userDetails
+        System.out.println("User Details:");
+        for (HashMap.Entry<String, String> entry : userDetails.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 
-    public void writeUserDetailsToFile() {
-        System.out.println("Writing account to file");
+    public HashMap<String,String> getUserDetails(){
+        return userDetails;
     }
-
 }

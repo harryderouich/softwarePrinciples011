@@ -41,11 +41,20 @@ public class BusinessAccount extends Account {
         String monthlyQuota = input.readValidString("Please enter " + "required monthly quota " + monthlyQuotas, monthlyQuotas);
         super.userDetails.put("monthlyQuota", monthlyQuota);
 
-        super.userDetails.put("monthlyPrice", String.valueOf(businessPricing.get(monthlyQuota)));
+        if (Objects.equals(accountType, "business")) {
+            super.userDetails.put("monthlyPrice", String.valueOf(businessPricing.get(monthlyQuota)));
+        } else {
+            super.userDetails.put("monthlyPrice", String.valueOf(businessPlusPricing.get(monthlyQuota)));
+        }
 
         payment(accountType, monthlyQuota, Integer.parseInt(super.userDetails.get("monthlyPrice")));
 
         super.displayUserDetails();
+    }
+
+    // New constructor to accept user details from a HashMap
+    public BusinessAccount(HashMap<String, String> userDetails) {
+        super(userDetails);
     }
 
     void payment(String accountType, String monthlyQuota, int monthlyPrice) {

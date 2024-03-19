@@ -110,6 +110,17 @@ public class InputReader {
         return inputString;
     }
 
+    public void pressEnterToContinue()
+    {
+        System.out.println("Press Enter key to continue...");
+        try
+        {
+            System.in.read();
+        }
+        catch(Exception ignored)
+        {}
+    }
+
 
     // Verify an integer is in a range of values
     public boolean verifyIntChoiceInRange(int choice, ArrayList<Integer> validValues) {
