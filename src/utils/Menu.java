@@ -1,5 +1,9 @@
 package utils;
 
+import accounts.Account;
+
+import java.util.Objects;
+
 public class Menu {
 
     public void displayMainMenu() {
@@ -29,6 +33,41 @@ public class Menu {
         System.out.println("Did you know you can save 25% when paying annually?");
         System.out.println("1. Pay Monthly");
         System.out.println("2. Pay Annually (Save 25%)");
+    }
+
+    public void displayLoggedInMenu(Account loggedInAccount) {
+        System.out.println("Main Menu: ");
+        loggedInAccount.displayUserDetails();
+        System.out.println("1. Certificate Creation");
+        System.out.println("2. Log Out");
+        System.out.println("3. Help");
+        System.out.println("0. Exit");
+
+    }
+
+    public void displayPersonalCertificateMenu() {
+        System.out.println("Personal Account Certificate Builder");
+        System.out.println("1. Create single certificate");
+        System.out.println("0. Exit");
+    }
+
+    public void displayBusinessCertificateMenu() {
+        System.out.println("Business/+ Account Certificate Builder");
+        System.out.println("1. Create single certificate");
+        System.out.println("2. Create certificates in bulk");
+        System.out.println("0. Exit");
+    }
+
+    public void displayPersonalHelpMenu() {
+        System.out.println("Help");
+        System.out.println("1. View FAQs");
+        System.out.println("0. Exit");
+    }
+
+    public void displayBusinessHelpMenu() {
+        System.out.println("1. View FAQs");
+        System.out.println("2. Open a support ticket");
+        System.out.println("0. Exit");
     }
 
 }

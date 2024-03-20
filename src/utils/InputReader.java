@@ -141,7 +141,7 @@ public class InputReader {
         int year = 0;
         do {
             try {
-                System.out.println("Enter your card expiry year: ");
+                System.out.print("Enter your card expiry year: ");
                 year = inputObject.nextInt();
                 if (String.valueOf(year).length() == 2) {
                     year += 2000;

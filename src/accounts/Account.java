@@ -22,11 +22,7 @@ public class Account {
     }
 
     public void displayUserDetails() {
-        // Print the contents of userDetails
-        System.out.println("User Details:");
-        for (HashMap.Entry<String, String> entry : userDetails.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
+        System.out.println("User: " + userDetails.get("email"));
     }
 
     public HashMap<String,String> getUserDetails(){
