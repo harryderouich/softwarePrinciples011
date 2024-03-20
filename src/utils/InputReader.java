@@ -19,7 +19,7 @@ public class InputReader {
             try {
                 System.out.print(prompt + " ");
                 inputString = inputObject.nextLine();
-                valid = verifyStringLength(inputString, 1);
+                valid = verifyMinStringLength(inputString, 1);
             } catch (Exception e) {
                 System.out.println("Error: " + prompt);
             }
@@ -70,9 +70,25 @@ public class InputReader {
             try {
                 System.out.print(prompt + " (min length " + minLength + " chars): ");
                 inputString = inputObject.nextLine();
-                valid = verifyStringLength(inputString, minLength);
+                valid = verifyMinStringLength(inputString, minLength);
             } catch (Exception e) {
                 System.out.println("Error: Must be at least " + minLength + " characters. Please try again");
+            }
+        } while (!valid);
+        return inputString;
+    }
+
+    // Read strings and validate against a minimum length
+    public String readStringWithExactLength(String prompt, int exactLength) {
+        boolean valid = false;
+        String inputString = null;
+        do {
+            try {
+                System.out.print(prompt + " (" + exactLength + " chars): ");
+                inputString = inputObject.nextLine();
+                valid = verifyExactStringLength(inputString, exactLength);
+            } catch (Exception e) {
+                System.out.println("Error: Must be at exactly " + exactLength + " characters. Please try again");
             }
         } while (!valid);
         return inputString;
@@ -110,8 +126,7 @@ public class InputReader {
         return inputString;
     }
 
-    public void pressEnterToContinue()
-    {
+    public void pressEnterToContinue() {
         System.out.println("Press Enter key to continue...");
         try
         {
@@ -121,6 +136,25 @@ public class InputReader {
         {}
     }
 
+    public String readCardYear() {
+        boolean valid = false;
+        int year = 0;
+        do {
+            try {
+                System.out.println("Enter your card expiry year: ");
+                year = inputObject.nextInt();
+                if (String.valueOf(year).length() == 2) {
+                    year += 2000;
+                    System.out.println("DEBUG: year " + year);
+                }
+                valid = yearIsInFuture(year);
+            } catch (Exception e) {
+                System.out.println("Error: Year is invalid, please try again.");
+                inputObject.nextLine();
+            }
+        } while (!valid);
+        return String.valueOf(year);
+    }
 
     // Verify an integer is in a range of values
     public boolean verifyIntChoiceInRange(int choice, ArrayList<Integer> validValues) {
@@ -139,9 +173,17 @@ public class InputReader {
     }
 
     // Verify a string is at least a minimum length
-    public boolean verifyStringLength(String inputString, int minLength) throws Exception {
+    public boolean verifyMinStringLength(String inputString, int minLength) throws Exception {
         if (inputString.length() < minLength) {
             throw new Exception("Error: Must be at least " + minLength + " characters. Please try again");
+        }
+        return true;
+    }
+
+    // Verify a string is an exact length
+    public boolean verifyExactStringLength(String inputString, int exactLength) throws Exception {
+        if (inputString.length() != exactLength) {
+            throw new Exception("Error: Must be exactly " + exactLength + " characters. Please try again");
         }
         return true;
     }
@@ -161,6 +203,11 @@ public class InputReader {
             throw new Exception("Error: Invalid card number (length not 16)");
         }
         return true;
+    }
+
+    // Verify a year is in the future
+    public boolean yearIsInFuture(int inputInt) {
+        return inputInt >= 2024;
     }
 
 }

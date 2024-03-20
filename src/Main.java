@@ -13,6 +13,7 @@ public class Main {
 
         boolean quit = false;
 
+
         Menu myMenu = new Menu();
         InputReader input = new InputReader();
         Account loggedInAccount = null;

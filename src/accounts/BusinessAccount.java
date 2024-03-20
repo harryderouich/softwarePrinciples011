@@ -82,7 +82,16 @@ public class BusinessAccount extends Account {
             amountDue = Math.round(amountDue * 100.0) / 100.0;
         }
         System.out.println("Amount Due: £" + amountDue);
-        String cardNumber = input.readStringWithLength("Enter your long card number", 16);
+        String cardNumber = input.readStringWithLength("Enter long card number", 16);
         super.userDetails.put("cardNumber", cardNumber);
+
+        ArrayList<String> validMonths = new ArrayList<>(Arrays.asList("01", "02", "03", "04", "04", "05", "06", "07", "08", "09", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8" , "9"));
+        String monthExpiry = input.readValidString("Enter your card expiry month",validMonths);
+        super.userDetails.put("cardMonthExpiry", monthExpiry);
+
+        String yearExpiry = input.readCardYear();
+        super.userDetails.put("cardYearExpiry", yearExpiry);
+
+        String cardCVC = input.readStringWithExactLength("Enter your card's CVC", 3);
     }
 }
