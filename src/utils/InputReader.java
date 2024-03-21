@@ -110,6 +110,32 @@ public class InputReader {
         return inputString;
     }
 
+    // Read integers and validate as being positive
+    public int readPositiveInt(String prompt) {
+        int value = 0;
+        boolean valid = false;
+        do {
+            try {
+                System.out.print(prompt + " ");
+                String input = inputObject.nextLine();
+                value = Integer.parseInt(input);
+                valid = verifyIntPositive(value);
+            } catch (NumberFormatException e) {
+                System.out.println("Sorry, please enter a valid integer");
+            } catch (Exception e) {
+                System.out.println("Sorry, please enter a positive value");
+            }
+        } while (!valid);
+        return value;
+    }
+
+    private boolean verifyIntPositive(int value) throws Exception {
+        if (!(value > 0)) {
+            throw new Exception("Error: Invalid card number (length not 16)");
+        }
+        return true;
+    }
+
     // Read 16 digit card number
     public String readCardNumber(String prompt) {
         boolean valid = false;
@@ -130,6 +156,7 @@ public class InputReader {
         System.out.println("Press Enter key to continue...");
         try
         {
+            System.out.print("\n");
             System.in.read();
         }
         catch(Exception ignored)

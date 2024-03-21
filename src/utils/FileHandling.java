@@ -39,9 +39,9 @@ public class FileHandling {
                     userDetails.getOrDefault("paymentOption", "") + "," +
                     userDetails.getOrDefault("cardNumber", "") + "\n";
             bWriter.write(rowToWrite); // Append the row to CSV
-            System.out.println("DEBUG: userDetails written to CSV file.");
+            // System.out.println("DEBUG: userDetails written to CSV file.");
         } catch (IOException e) {
-            System.out.println("DEBUG: Error while writing userDetails to CSV file: " + e.getMessage());
+            // System.out.println("DEBUG: Error while writing userDetails to CSV file: " + e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class FileHandling {
                 }
                 String[] rowToList = line.split(","); // Create a list with each element of the user's row
                 if (rowToList.length >= 2 && rowToList[0].equals(email) && rowToList[1].equals(password)) {
-                    System.out.println("DEBUG: User successfully authenticated.");
+                    // System.out.println("DEBUG: User successfully authenticated.");
 
                     // Once authenticated, extract account details from the user's row list
                     HashMap<String, String> accountDetails = new HashMap<>(); // To store the details
@@ -69,10 +69,10 @@ public class FileHandling {
                     return accountDetails; // Return/finish the loop/s and return HashMap with user's details
                 }
             }
-            System.out.println("DEBUG: Auth failed, incorrect email/password.");
+            // System.out.println("DEBUG: Auth failed, incorrect email/password.");
             return null; // Don't log them in
         } catch (IOException e) {
-            System.out.println("DEBUG: Error when reading userDetails from CSV file: " + e.getMessage());
+            // System.out.println("DEBUG: Error when reading userDetails from CSV file: " + e.getMessage());
             return null; // Don't log them in
         }
     }
@@ -85,7 +85,7 @@ public class FileHandling {
         if (accountDetails != null) {
             // Recreate account depending on whether it's personal or business/+
             Account account = recreateAccount(accountDetails);
-            System.out.println("DEBUG: Account recreated, returning");
+            // System.out.println("DEBUG: Account recreated, returning");
             return account;
         }
         return null;
@@ -95,10 +95,10 @@ public class FileHandling {
         // Determine the account type using the accountType value and recreate either personal or business account
         switch (accountDetails.get("accountType")) {
             case "personal":
-                System.out.println("DEBUG: Recreating personal acc");
+                // System.out.println("DEBUG: Recreating personal acc");
                 return new PersonalAccount(accountDetails);
             case "business", "businesspPlus":
-                System.out.println("DEBUG: Recreating business acc");
+                // System.out.println("DEBUG: Recreating business acc");
                 return new BusinessAccount(accountDetails);
         }
         // If neither accountType matches don't recreate an account

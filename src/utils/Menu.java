@@ -53,7 +53,7 @@ public class Menu {
 
     public void displayBusinessCertificateMenu() {
         System.out.println("Business/+ Account Certificate Builder");
-        System.out.println("1. Create single certificate");
+        System.out.println("1. Create certificates manually");
         System.out.println("2. Create certificates in bulk");
         System.out.println("0. Exit");
     }

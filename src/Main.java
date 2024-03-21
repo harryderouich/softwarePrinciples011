@@ -2,11 +2,11 @@ import accounts.*;
 import certificateGenerator.BasicCertificate;
 import certificateGenerator.CustomCertificate;
 import services.Helper;
+import testing.TestAccounts;
 import utils.FileHandling;
 import utils.InputReader;
 import utils.Menu;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,6 +20,11 @@ public class Main {
         Menu myMenu = new Menu();
         InputReader input = new InputReader();
         Account loggedInAccount = null;
+
+        // Hard Coded Login details to save time
+        TestAccounts testAccounts = new TestAccounts();
+        loggedInAccount = new Account(testAccounts.createBusinessAcc());
+        // End
 
         while (!quit) {
             // Main Menu
@@ -42,18 +47,24 @@ public class Main {
                                 PersonalAccount pAccount = new PersonalAccount();
                                 FileHandling.writeUserDetails(pAccount.userDetails);
                                 loggedInAccount = pAccount;
+                                System.out.println("Your account has been created and you are now logged in.");
+                                input.pressEnterToContinue();
                                 break;
                             case 2:
                                 System.out.println("Register a Business Account");
                                 BusinessAccount bAccount = new BusinessAccount("business");
                                 FileHandling.writeUserDetails(bAccount.userDetails);
                                 loggedInAccount = bAccount;
+                                System.out.println("Your account has been created and you are now logged in.");
+                                input.pressEnterToContinue();
                                 break;
                             case 3:
                                 System.out.println("Register a Business+ Account");
                                 BusinessAccount bpAccount = new BusinessAccount("businessPlus");
                                 FileHandling.writeUserDetails(bpAccount.userDetails);
                                 loggedInAccount = bpAccount;
+                                System.out.println("Your account has been created and you are now logged in.");
+                                input.pressEnterToContinue();
                                 break;
                         } // else (0) return
 
@@ -67,11 +78,14 @@ public class Main {
                             case 1:
                                 // TODO
                                 System.out.println("Login with key");
+                                break;
                             case 2:
                                 String email = input.readString("Enter your email");
                                 String password = input.readString("Enter your password");
                                 loggedInAccount = FileHandling.authenticateAndRecreateAccount(email, password);
+                                System.out.println("Login successful");
                                 input.pressEnterToContinue();
+                                break;
                         } // else (0) return
                         break;
                     case 3:
@@ -93,9 +107,35 @@ public class Main {
                 switch (liChoice) {
                     case 1: // Create Certificates
                         if (Objects.equals(loggedInAccount.userDetails.get("accountType"), "personal")) {
-                            BasicCertificate bCertificate = new BasicCertificate();
+
+                            myMenu.displayPersonalCertificateMenu();
+                            ArrayList<Integer> certMenuValidValues = new ArrayList<>(Arrays.asList(1, 2, 3, 0));
+                            int certMenuChoice = input.readValidInt("Please enter a choice", certMenuValidValues);
+
+                            if (certMenuChoice == 1) {
+                                // todo implement daily limit/check
+                                BasicCertificate bCertificate = new BasicCertificate();
+                                bCertificate.generateSingleCert();
+                            }
+
                         } else if (Objects.equals(loggedInAccount.userDetails.get("accountType"), "business") || Objects.equals(loggedInAccount.userDetails.get("accountType"), "businessPlus")) {
-                            CustomCertificate cCertificate = new CustomCertificate(loggedInAccount);
+
+                            myMenu.displayBusinessCertificateMenu();
+                            ArrayList<Integer> certMenuValidValues = new ArrayList<>(Arrays.asList(1, 2, 0));
+                            int certMenuChoice = input.readValidInt("Please enter a choice", certMenuValidValues);
+
+                            if (certMenuChoice == 1) {
+                                // Generate single certificates
+                                CustomCertificate cCertificate = new CustomCertificate();
+                                cCertificate.generateMultiSingleCerts();
+
+                            } else if (certMenuChoice == 2) {
+                                // Generate certificates in bulk
+
+                            }
+
+
+
                         }
                         break;
                     case 2: // Log In

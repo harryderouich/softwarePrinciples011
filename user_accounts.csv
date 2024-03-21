@@ -1,0 +1,4 @@
+email,password,accountType,businessName,monthlyQuota,monthlyPrice,paymentOption,cardNumber
+harry@biz.net,password2,business,Bizz,500,159,annually,1234567812345678
+harry@aol.com,password1,personal,,,,,
+harry@aol.co.uk,password1,personal,,,,,

@@ -94,7 +94,5 @@ public class BusinessAccount extends Account {
 
         String cardCVC = input.readStringWithExactLength("Enter your card's CVC", 3);
         super.userDetails.put("cardCVC", cardCVC);
-
-
     }
 }
