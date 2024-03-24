@@ -27,7 +27,8 @@ public class FileHandling {
              BufferedWriter bWriter = new BufferedWriter(fWriter)) {
             if (fileIsEmpty) {
                 // Write CSV headings if file is empty
-                bWriter.write("email,password,accountType,businessName,monthlyQuota,monthlyPrice,paymentOption,cardNumber\n");
+                bWriter.write("email,password,accountType,businessName,monthlyQuota,monthlyPrice,paymentOption," +
+                        "cardNumber,cardMonthExpiry,cardYearExpiry,cardCVC\n");
             }
             // Construct userDetails row
             String rowToWrite = userDetails.getOrDefault("email", "") + "," +
@@ -37,7 +38,10 @@ public class FileHandling {
                     userDetails.getOrDefault("monthlyQuota", "") + "," +
                     userDetails.getOrDefault("monthlyPrice", "") + "," +
                     userDetails.getOrDefault("paymentOption", "") + "," +
-                    userDetails.getOrDefault("cardNumber", "") + "\n";
+                    userDetails.getOrDefault("cardNumber", "") + "\n" +
+                    userDetails.getOrDefault("cardMonthExpiry", "") + "," +
+                    userDetails.getOrDefault("cardYearExpiry", "") + "," +
+                    userDetails.getOrDefault("cardCVC", "");
             bWriter.write(rowToWrite); // Append the row to CSV
             // System.out.println("DEBUG: userDetails written to CSV file.");
         } catch (IOException e) {

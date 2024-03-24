@@ -70,4 +70,9 @@ public class Menu {
         System.out.println("0. Exit");
     }
 
+    public void displayAdditionalCertificateOptions() {
+        System.out.println("1. Add a custom field");
+        System.out.println("0. Continue");
+    }
+
 }

@@ -13,14 +13,14 @@ public class CertificatePrinter {
             column2Width = Math.max(column2Width, certificateData.get(key).length());
         }
 
-        int rowWidth = column1Width + column2Width + 5;
+        int rowWidth = column1Width + column2Width + 6;
 
         System.out.println("-".repeat(rowWidth));
 
         // Print each row containing key-value pairs
         for (String key : certificateData.keySet()) {
             String value = certificateData.get(key);
-            int padding = column1Width - key.length();
+            int padding = column1Width - key.length() + 1;
             System.out.printf("%s:%s%s\n", key, " ".repeat(padding), value);
         }
 

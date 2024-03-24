@@ -25,6 +25,7 @@ public class Account {
         System.out.println("User: " + userDetails.get("email"));
     }
 
+    // todo delete?
     public HashMap<String,String> getUserDetails(){
         return userDetails;
     }

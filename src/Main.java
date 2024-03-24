@@ -19,6 +19,7 @@ public class Main {
 
         Menu myMenu = new Menu();
         InputReader input = new InputReader();
+        Helper help = new Helper();
         Account loggedInAccount = null;
 
         // Hard Coded Login details to save time
@@ -89,8 +90,7 @@ public class Main {
                         } // else (0) return
                         break;
                     case 3:
-                        Helper help = new Helper();
-                        // Todo add input/options
+                        help.help();
                         break;
                     case 0:
                         System.out.println("Quit");
@@ -130,11 +130,9 @@ public class Main {
                                 cCertificate.generateMultiSingleCerts();
 
                             } else if (certMenuChoice == 2) {
-                                // Generate certificates in bulk
+                                // todo Generate certificates in bulk
 
                             }
-
-
 
                         }
                         break;
@@ -145,7 +143,7 @@ public class Main {
                         }
                         break;
                     case 3: // Help
-                        Helper help = new Helper(loggedInAccount);
+                        help.loggedInHelp(loggedInAccount);
                         // Todo add input/options
                         break;
                 }

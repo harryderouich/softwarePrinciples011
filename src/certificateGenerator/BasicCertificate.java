@@ -4,12 +4,14 @@ import utils.InputReader;
 import utils.Menu;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class BasicCertificate {
 
     InputReader input = new InputReader();
     Menu myMenu = new Menu();
+    ArrayList<String> certificateFields = new ArrayList<>(Arrays.asList("Business Name", "Participant Name", "Course Name", "Date", "Instructor Name"));
 
     public BasicCertificate() { // No params - Personal Account
     }
@@ -25,11 +27,11 @@ public class BasicCertificate {
     public HashMap<String, String> singleCertCapture() {
         System.out.println("Please enter the following details");
         HashMap<String, String> certificate = new HashMap<>();
-        certificate.put("Business Name", input.readString("Business Name: "));
-        certificate.put("Participant Name", input.readString("Participant Name: "));
-        certificate.put("Course Name", input.readString("Course Name: "));
-        certificate.put("Date", input.readString("Date: "));
-        certificate.put("Instructor Name", input.readString("Instructor: "));
+
+        for (String s : certificateFields) {
+            certificate.put(s, input.readString(s + ": "));
+        }
+
         return certificate;
     }
 
