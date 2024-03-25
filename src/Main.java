@@ -27,7 +27,7 @@ public class Main {
 
         // Hard Coded Login details to save time
         TestAccounts testAccounts = new TestAccounts();
-        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
+        loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         while (!quit) {
@@ -79,9 +79,16 @@ public class Main {
                                 // TODO configure login key system with assigned quizzes
                                 System.out.println("Login with login key");
                                 String loginKey = input.readStringWithExactLength("Please enter your login key", 10);
+                                // Todo create login system using loginKey to retrieve chosenQuiz (and later user details hashmap)
+
+                                // Todo these 2 lines will be removed
                                 UserPlatform.displayQuizzes();
-                                int chosenQuiz = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 4)));
-                                UserPlatform.runQuiz(chosenQuiz);
+                                int chosenQuiz = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 4))); // Todo make dynamic
+
+                                boolean passed = UserPlatform.runQuiz(chosenQuiz);
+                                if (passed) {
+                                    // Todo create prefilled hashmap to generate certificate upon passing
+                                }
                                 break;
                             case 2:
                                 String email = input.readString("Enter your email");
@@ -157,7 +164,17 @@ public class Main {
                         help.loggedInHelp(loggedInAccount);
                         break;
                     case 4: // Quiz Configuration
-                        AdminPlatform.createNewQuiz();
+                        myMenu.displayQuizOptionMenu();
+                        int quizMenuOption = input.readValidInt("Choose an option", new ArrayList<>(Arrays.asList(1, 2, 0)));
+                        switch (quizMenuOption) {
+                            case 1: // Create new quizzes
+                                AdminPlatform.createNewQuiz();
+                                break;
+                            case 2: // Generate Login Keys
+                                AdminPlatform.generateLoginKeys();
+                                input.pressEnterToContinue();
+                        }
+
                         break;
                     case 0:
                         System.out.println("Quitting");

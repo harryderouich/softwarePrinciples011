@@ -15,28 +15,30 @@ public class UserPlatform {
     public static final String filename = "questions.json";
 
     public static void displayQuizzes() throws IOException {
-        InputReader input = new InputReader();
-        JSONObject json = new JSONObject(readFile());
-        JSONArray quizzes = json.getJSONArray("quizzes");
+        JSONObject json = new JSONObject(readFromFile());
+        JSONArray allQuizzes = json.getJSONArray("quizzes");
 
         System.out.println("\nAvailable Quizzes");
-        for (int i = 0; i < quizzes.length(); i++) {
-            JSONObject quiz = quizzes.getJSONObject(i);
+        for (int i = 0; i < allQuizzes.length(); i++) {
+            JSONObject quiz = allQuizzes.getJSONObject(i);
             System.out.println(i+1 + ". " + quiz.getString("title"));
         }
     }
 
-    public static void runQuiz(int chosenQuiz) throws IOException {
+    public static boolean runQuiz(int chosenQuiz) throws IOException {
         InputReader input = new InputReader();
-        JSONObject json = new JSONObject(readFile());
+        JSONObject json = new JSONObject(readFromFile());
 
         JSONArray quizzes = json.getJSONArray("quizzes");
         JSONObject quiz = quizzes.getJSONObject(chosenQuiz - 1);
+
         JSONArray questions = quiz.getJSONArray("questions");
+        int passMark = quiz.getInt("passmark");
+        String title = quiz.getString("title");
 
         int marks = 0;
 
-        System.out.println(quiz.getString("title"));
+        System.out.println(title);
 
         for (int i = 0; i < questions.length(); i++) {
             JSONObject questionObject = questions.getJSONObject(i);
@@ -51,20 +53,44 @@ public class UserPlatform {
             int userAnswerIndex = input.readValidInt("Select an answer", new ArrayList<>(Arrays.asList(1, 2, 3)));
 
             if (userAnswerIndex - 1 == questionObject.getInt("correctAnswerIndex")) {
-                System.out.println("Your answer was correct");
+                System.out.println("Correct!");
                 marks += 1;
             } else {
-                System.out.println("Your answer was incorrect");
+                System.out.println("Incorrect.");
             }
         }
 
-        int numQuestions = questions.length(); // Adjusted to consider the number of questions in the quiz
-        double percentage = (double) marks / numQuestions * 100;
+        int numQuestions = questions.length();
+        double percentageScored = (double) marks / numQuestions * 100;
         System.out.println("Total: " + marks + "/" + numQuestions);
-        System.out.println(percentage + "%");
+        // todo round percentage to 0 or 1 decimal places
+        System.out.println(percentageScored + "%");
+
+        if (percentageScored >= passMark) {
+            System.out.println("You have passed!");
+            return true;
+        }
+
+        System.out.println("Sorry, you have not passed.");
+        return false;
     }
 
-    public static String readFile() throws IOException {
+
+    public static String readFromFile() throws IOException {
         return new String(Files.readAllBytes(Paths.get(UserPlatform.filename)));
+    }
+
+    public static int getNumberOfQuizzes() throws IOException {
+        JSONObject json = new JSONObject(readFromFile());
+        JSONArray allQuizzes = json.getJSONArray("quizzes");
+        return allQuizzes.length();
+    }
+
+    public static ArrayList<Integer> generateQuizIntList(int numberOfQuizzes) {
+        ArrayList<Integer> quizIntList = new ArrayList<>();
+        for (int i = 1; i <= numberOfQuizzes; i++) {
+            quizIntList.add(i);
+        }
+        return quizIntList;
     }
 }

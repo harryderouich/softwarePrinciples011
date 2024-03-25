@@ -86,5 +86,12 @@ public class Menu {
         System.out.println("3. Schedule delivery");
     }
 
+    public void displayQuizOptionMenu() {
+        System.out.println("Manage Quizzes & Login Keys");
+        System.out.println("1. Create a new quiz");
+        System.out.println("2. Generate login keys");
+        System.out.println("0. Return");
+    }
+
 
 }

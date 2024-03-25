@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 public class BasicCertificate {
 
-    InputReader input = new InputReader();
-    ArrayList<String> certificateFields = new ArrayList<>(Arrays.asList("Business Name", "Participant Name", "Course Name", "Date", "Instructor Name"));
+    static InputReader input = new InputReader();
+    static ArrayList<String> certificateFields = new ArrayList<>(Arrays.asList("Business Name", "Participant Name", "Course Name", "Date", "Instructor Name"));
 
     public BasicCertificate() { // No params - Personal Account
     }
@@ -22,7 +22,7 @@ public class BasicCertificate {
         input.pressEnterToContinue();
         }
 
-    public HashMap<String, String> singleCertCapture() {
+    public static HashMap<String, String> singleCertCapture() {
         System.out.println("Please enter the following details");
         HashMap<String, String> certificate = new HashMap<>();
 

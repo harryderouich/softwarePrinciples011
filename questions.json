@@ -1,67 +1,134 @@
-{
-  "quizzes": [
+{"quizzes": [
     {
-      "title": "Geography Quiz",
-      "questions": [
-        {
-          "question": "What is the capital city of England?",
-          "answers": ["London", "Manchester", "Birmingham"],
-          "correctAnswerIndex": 0
-        },
-        {
-          "question": "Which river flows through London?",
-          "answers": ["Thames", "Severn", "Clyde"],
-          "correctAnswerIndex": 0
-        },
-        {
-          "question": "Where is Big Ben located?",
-          "answers": ["London", "Manchester", "Birmingham"],
-          "correctAnswerIndex": 0
-        }
-      ],
-      "passmark": 50
+        "questions": [
+            {
+                "question": "What is the capital city of England?",
+                "answers": [
+                    "London",
+                    "Manchester",
+                    "Birmingham"
+                ],
+                "correctAnswerIndex": 0
+            },
+            {
+                "question": "Which river flows through London?",
+                "answers": [
+                    "Thames",
+                    "Severn",
+                    "Clyde"
+                ],
+                "correctAnswerIndex": 0
+            },
+            {
+                "question": "Where is Big Ben located?",
+                "answers": [
+                    "London",
+                    "Manchester",
+                    "Birmingham"
+                ],
+                "correctAnswerIndex": 0
+            }
+        ],
+        "passmark": 50,
+        "title": "Geography Quiz"
     },
     {
-      "title": "History Quiz",
-      "questions": [
-        {
-          "question": "Who was the first monarch of England?",
-          "answers": ["Henry VIII", "Elizabeth I", "William the Conqueror"],
-          "correctAnswerIndex": 2
-        },
-        {
-          "question": "In what year was the Great Fire of London?",
-          "answers": ["1666", "1776", "1492"],
-          "correctAnswerIndex": 0
-        },
-        {
-          "question": "What is the famous prehistoric monument in south-west England called?",
-          "answers": ["Stonehenge", "Tower of London", "Buckingham Palace"],
-          "correctAnswerIndex": 0
-        }
-      ],
-      "passmark": 50
+        "questions": [
+            {
+                "question": "Who was the first monarch of England?",
+                "answers": [
+                    "Henry VIII",
+                    "Elizabeth I",
+                    "William the Conqueror"
+                ],
+                "correctAnswerIndex": 2
+            },
+            {
+                "question": "In what year was the Great Fire of London?",
+                "answers": [
+                    "1666",
+                    "1776",
+                    "1492"
+                ],
+                "correctAnswerIndex": 0
+            },
+            {
+                "question": "What is the famous prehistoric monument in south-west England called?",
+                "answers": [
+                    "Stonehenge",
+                    "Tower of London",
+                    "Buckingham Palace"
+                ],
+                "correctAnswerIndex": 0
+            }
+        ],
+        "passmark": 50,
+        "title": "History Quiz"
     },
     {
-      "title": "Literature Quiz",
-      "questions": [
-        {
-          "question": "Who wrote 'Alice's Adventures in Wonderland'?",
-          "answers": ["Charles Dickens", "Lewis Carroll", "Beatrix Potter"],
-          "correctAnswerIndex": 1
-        },
-        {
-          "question": "Which author created the character of Peter Pan?",
-          "answers": ["J.M. Barrie", "Enid Blyton", "Roald Dahl"],
-          "correctAnswerIndex": 0
-        },
-        {
-          "question": "What famous detective did Sir Arthur Conan Doyle create?",
-          "answers": ["Sherlock Holmes", "Hercule Poirot", "Miss Marple"],
-          "correctAnswerIndex": 0
-        }
-      ],
-      "passmark": 50
+        "questions": [
+            {
+                "question": "Who wrote 'Alice's Adventures in Wonderland'?",
+                "answers": [
+                    "Charles Dickens",
+                    "Lewis Carroll",
+                    "Beatrix Potter"
+                ],
+                "correctAnswerIndex": 1
+            },
+            {
+                "question": "Which author created the character of Peter Pan?",
+                "answers": [
+                    "J.M. Barrie",
+                    "Enid Blyton",
+                    "Roald Dahl"
+                ],
+                "correctAnswerIndex": 0
+            },
+            {
+                "question": "What famous detective did Sir Arthur Conan Doyle create?",
+                "answers": [
+                    "Sherlock Holmes",
+                    "Hercule Poirot",
+                    "Miss Marple"
+                ],
+                "correctAnswerIndex": 0
+            }
+        ],
+        "passmark": 50,
+        "title": "Literature Quiz"
+    },
+    {
+        "questions": [
+            {
+                "question": "1",
+                "answers": [
+                    "1",
+                    "1",
+                    "1"
+                ],
+                "correctAnswerIndex": 1
+            },
+            {
+                "question": "1",
+                "answers": [
+                    "1",
+                    "1",
+                    "1"
+                ],
+                "correctAnswerIndex": 1
+            },
+            {
+                "question": "2",
+                "answers": [
+                    "2",
+                    "2",
+                    "2"
+                ],
+                "correctAnswerIndex": 2
+            }
+        ],
+        "passmark": 1,
+        "title": "1"
     }
-  ]
-}
+]}

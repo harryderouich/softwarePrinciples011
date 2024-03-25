@@ -162,4 +162,16 @@ public class FileHandling {
         return content;
     }
 
+    public static void writeLoginKeyCSV(String loginKey, int quizIndex) {
+        String loginKeysCSV = "login_keys.csv";
+
+        try (FileWriter writer = new FileWriter(loginKeysCSV, true)) {
+            writer.append(loginKey).append(",").append(String.valueOf(quizIndex)).append("\n");
+            writer.flush();
+            System.out.println("Login keys saved to file " + loginKeysCSV);
+        } catch (IOException e) {
+            System.out.println("Error writing CSV file: " + e);
+        }
+    }
+
 }
