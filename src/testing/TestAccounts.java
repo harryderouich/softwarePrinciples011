@@ -31,4 +31,17 @@ public class TestAccounts {
         return businessAcc;
     }
 
+    public HashMap<String, String> createBusinessPlusAcc() {
+        HashMap<String, String> businessPlusAcc = new HashMap<>();
+        businessPlusAcc.put("email", "harry@biz.net");
+        businessPlusAcc.put("password", "password2");
+        businessPlusAcc.put("accountType", "businessPlus");
+        businessPlusAcc.put("businessName", "MyBiz");
+        businessPlusAcc.put("monthlyQuota", "100");
+        businessPlusAcc.put("monthlyPrice", "99");
+        businessPlusAcc.put("paymentOption", "monthly");
+        businessPlusAcc.put("cardNumber", "1234123412341234");
+        return businessPlusAcc;
+    }
+
 }

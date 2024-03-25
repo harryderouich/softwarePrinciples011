@@ -17,7 +17,7 @@ public class InputReader {
         String inputString = null;
         do {
             try {
-                System.out.print(prompt + " ");
+                System.out.print(prompt + ": ");
                 inputString = inputObject.nextLine();
                 valid = verifyMinStringLength(inputString, 1);
             } catch (Exception e) {
@@ -33,10 +33,11 @@ public class InputReader {
         boolean valid = false;
         do {
             try {
-                System.out.print(prompt + " ");
+                System.out.print(prompt + ": ");
                 String input = inputObject.nextLine();
                 value = Integer.parseInt(input);
                 valid = verifyIntChoiceInRange(value, validValues);
+                System.out.println(" ");
             } catch (NumberFormatException e) {
                 System.out.println("Sorry, please enter a valid integer");
             } catch (InputMismatchException e) {
@@ -52,7 +53,7 @@ public class InputReader {
         String value = null;
         do {
             try {
-                System.out.print(prompt + " ");
+                System.out.print(prompt + ": ");
                 value = inputObject.nextLine();
                 valid = verifyStringChoiceInRange(value, validValues);
             } catch (InputMismatchException e) {
@@ -100,7 +101,7 @@ public class InputReader {
         String inputString = null;
         do {
             try {
-                System.out.print(prompt + " ");
+                System.out.print(prompt + ": ");
                 inputString = inputObject.nextLine();
                 valid = verifyEmailFormat(inputString);
             } catch (Exception e) {
@@ -116,7 +117,7 @@ public class InputReader {
         boolean valid = false;
         do {
             try {
-                System.out.print(prompt + " ");
+                System.out.print(prompt + ": ");
                 String input = inputObject.nextLine();
                 value = Integer.parseInt(input);
                 valid = verifyIntPositive(value);

@@ -29,9 +29,10 @@ public class CertificatePrinter {
     }
 
     public static void printCertificates(HashMap<String, String>[] certificates) {
-        for (int i = 0; i < certificates.length; i++) {
-            printCertificate(certificates[i]);
+        for (HashMap<String, String> certificate : certificates) {
+            printCertificate(certificate);
         }
+
     }
 }
 

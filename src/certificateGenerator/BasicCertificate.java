@@ -1,7 +1,6 @@
 package certificateGenerator;
 
 import utils.InputReader;
-import utils.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +9,6 @@ import java.util.HashMap;
 public class BasicCertificate {
 
     InputReader input = new InputReader();
-    Menu myMenu = new Menu();
     ArrayList<String> certificateFields = new ArrayList<>(Arrays.asList("Business Name", "Participant Name", "Course Name", "Date", "Instructor Name"));
 
     public BasicCertificate() { // No params - Personal Account
@@ -19,7 +17,7 @@ public class BasicCertificate {
     public void generateSingleCert() {
         System.out.println("Creating a single certificate.");
         HashMap <String, String> certificate = singleCertCapture();
-        displayCertificate(certificate);
+        displaySingleCertificate(certificate);
         System.out.println("Certificate created successfully");
         input.pressEnterToContinue();
         }
@@ -29,13 +27,13 @@ public class BasicCertificate {
         HashMap<String, String> certificate = new HashMap<>();
 
         for (String s : certificateFields) {
-            certificate.put(s, input.readString(s + ": "));
+            certificate.put(s, input.readString(s));
         }
 
         return certificate;
     }
 
-    public void displayCertificate(HashMap<String, String> certificate) {
+    public void displaySingleCertificate(HashMap<String, String> certificate) {
         CertificatePrinter.printCertificate(certificate);
     }
 

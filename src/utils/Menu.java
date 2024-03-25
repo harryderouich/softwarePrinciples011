@@ -41,6 +41,9 @@ public class Menu {
         System.out.println("1. Certificate Creation");
         System.out.println("2. Log Out");
         System.out.println("3. Help");
+        if (Objects.equals(loggedInAccount.userDetails.get("accountType"), "businessPlus")) {
+            System.out.println("4. Configure Quizzes");
+        }
         System.out.println("0. Exit");
 
     }
@@ -65,6 +68,7 @@ public class Menu {
     }
 
     public void displayBusinessHelpMenu() {
+        System.out.println("Help");
         System.out.println("1. View FAQs");
         System.out.println("2. Open a support ticket");
         System.out.println("0. Exit");
@@ -74,5 +78,13 @@ public class Menu {
         System.out.println("1. Add a custom field");
         System.out.println("0. Continue");
     }
+
+    public void displayCertDeliveryMethods() {
+        System.out.println("Select a delivery method");
+        System.out.println("1. Display all");
+        System.out.println("2. Export to file");
+        System.out.println("3. Schedule delivery");
+    }
+
 
 }

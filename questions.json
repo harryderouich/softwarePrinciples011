@@ -18,7 +18,8 @@
           "answers": ["London", "Manchester", "Birmingham"],
           "correctAnswerIndex": 0
         }
-      ]
+      ],
+      "passmark": 50
     },
     {
       "title": "History Quiz",
@@ -38,7 +39,8 @@
           "answers": ["Stonehenge", "Tower of London", "Buckingham Palace"],
           "correctAnswerIndex": 0
         }
-      ]
+      ],
+      "passmark": 50
     },
     {
       "title": "Literature Quiz",
@@ -58,7 +60,8 @@
           "answers": ["Sherlock Holmes", "Hercule Poirot", "Miss Marple"],
           "correctAnswerIndex": 0
         }
-      ]
+      ],
+      "passmark": 50
     }
   ]
 }

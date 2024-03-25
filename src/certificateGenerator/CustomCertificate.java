@@ -1,5 +1,6 @@
 package certificateGenerator;
 
+import utils.FileHandling;
 import utils.InputReader;
 import utils.Menu;
 
@@ -13,12 +14,12 @@ public class CustomCertificate extends BasicCertificate {
     Menu myMenu = new Menu();
 
     public CustomCertificate() {
-        myMenu.displayBusinessCertificateMenu();
 
     }
 
-    public void generateMultiSingleCerts() {
+    public HashMap<String, String>[] generateMultiSingleCerts() {
         int numOfCerts = input.readPositiveInt("Enter the number of certificates you require");
+        System.out.println(" ");
         HashMap<String, String>[] certificates = new HashMap[numOfCerts];
 
         int customFieldChoice = -1;
@@ -37,9 +38,37 @@ public class CustomCertificate extends BasicCertificate {
         for (int i = 0; i < numOfCerts; i++) {
             System.out.println("Certificate " + (i+1) + "/" + numOfCerts);
             certificates[i] = super.singleCertCapture();
+            System.out.println(" ");
         }
 
-        CertificatePrinter.printCertificates(certificates);
+        System.out.println("Certificates ready!");
+
+        return certificates;
+
+    }
+
+    public void certificateDelivery(HashMap<String, String>[] certificates) {
+
+        myMenu.displayCertDeliveryMethods();
+        ArrayList<Integer> certDeliveryValidChoice = new ArrayList<>(Arrays.asList(1, 2, 3));
+        int certDeliveryChoice = input.readValidInt("Please enter a choice", certDeliveryValidChoice);
+
+        switch (certDeliveryChoice) {
+            case 1: // Display All
+                CertificatePrinter.printCertificates(certificates);
+                break;
+            case 2: // Export to file
+                String filename = input.readStringWithLength("Enter a file name to be used",1);
+                FileHandling.writeCertsToFile(certificates, filename);
+                System.out.println("Certificates written to file successfully!");
+                break;
+            case 3: // Schedule delivery
+                String dateToSend = input.readString("Enter the date to send the certificates (yyyy-mm-dd)");
+                String timeToSend = input.readString("Enter the time to send the certificates (hh:mm)");
+                FileHandling.writeCertsToFile(certificates, dateToSend + " " + timeToSend);
+                System.out.println("Success. Certificates will be sent on " + dateToSend + " " + timeToSend);
+                break;
+        }
 
     }
 

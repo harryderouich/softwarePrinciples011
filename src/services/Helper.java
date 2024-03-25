@@ -41,7 +41,7 @@ public class Helper {
                     frequentlyAskedQuestions();
                     break;
                 case 2: // Support ticket
-                    // todo
+                    openTicket(loggedInAccount);
                     break;
             } // else (0) return
 
@@ -88,6 +88,13 @@ public class Helper {
         } // else (0) return
     }
 
+    public void openTicket(Account loggedInAccount) {
+        System.out.println("Leave a message detailing your enquiry and a member of our team will get back to you");
+        String query = input.readString("Enter your message");
+        System.out.println("Submitted! We will respond to you on " + loggedInAccount.userDetails.get("email") +
+                " as soon as possible");
+        input.pressEnterToContinue();
+    }
 
 
 }

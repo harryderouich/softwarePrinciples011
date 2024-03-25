@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import certificateGenerator.CertificatePrinter;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+
 public class FileHandling {
 
     // TODO Add check for already used email
@@ -113,4 +117,38 @@ public class FileHandling {
         File file = new File(filePath);
         return !file.exists() || file.length() == 0;
     }
+
+    public static void writeCertsToFile(HashMap<String, String>[] certificates, String filename) {
+        PrintStream console = System.out;
+        try (PrintStream out = new PrintStream(new BufferedOutputStream(new FileOutputStream(filename + ".txt")))) {
+            System.setOut(out);
+            CertificatePrinter.printCertificates(certificates);
+        } catch (Exception e) {
+            System.err.println("Error: Certificates couldn't be written to file");
+            e.printStackTrace();
+        } finally {
+            System.setOut(console);
+        }
+    }
+
+    public static HashMap<String, String>[] csvToHashmap(String path) {
+        HashMap<String, String>[] certificates = null;
+        try (CSVReader reader = new CSVReader(new FileReader(path))) {
+            String[][] csvData = reader.readAll().toArray(new String[0][]);
+            String[] headers = csvData[0];
+            certificates = new HashMap[csvData.length - 1];
+
+            for (int row = 1; row < csvData.length; row++) {
+                HashMap<String, String> rowData = new HashMap<>();
+                for (int col = 0; col < headers.length; col++) {
+                    rowData.put(headers[col], csvData[row][col]);
+                }
+                certificates[row - 1] = rowData;
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+        return certificates;
+    }
+
 }

@@ -2,18 +2,20 @@ import accounts.*;
 import certificateGenerator.BasicCertificate;
 import certificateGenerator.CustomCertificate;
 import services.Helper;
+import testPlatform.UserPlatform;
 import testing.TestAccounts;
 import utils.FileHandling;
 import utils.InputReader;
 import utils.Menu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         boolean quit = false;
 
@@ -24,23 +26,20 @@ public class Main {
 
         // Hard Coded Login details to save time
         TestAccounts testAccounts = new TestAccounts();
-        loggedInAccount = new Account(testAccounts.createBusinessAcc());
+        loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         while (!quit) {
-            // Main Menu
-            myMenu.displayMainMenu();
-
             if (loggedInAccount == null) { // user isn't logged in
-                ArrayList<Integer> mmValidValues = new ArrayList<>(Arrays.asList(1, 2, 3, 0));
-                int mmChoice = input.readValidInt("Please enter a choice", mmValidValues);
+                // Main Menu
+                myMenu.displayMainMenu();
+                int mmChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 0)));
 
                 switch (mmChoice) {
                     case 1:
                         myMenu.displayRegisterMenu();
 
-                        ArrayList<Integer> registerValidValues = new ArrayList<>(Arrays.asList(1, 2, 3, 0));
-                        int registerChoice = input.readValidInt("Please enter a choice", registerValidValues);
+                        int registerChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 0)));
 
                         switch (registerChoice) {
                             case 1:
@@ -72,13 +71,16 @@ public class Main {
                         break;
                     case 2:
                         myMenu.displayLoginMenu();
-                        ArrayList<Integer> loginValidValues = new ArrayList<>(Arrays.asList(1, 2, 0));
-                        int loginChoice = input.readValidInt("Please enter a choice", loginValidValues);
+                        int loginChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 0)));
 
                         switch (loginChoice) {
                             case 1:
-                                // TODO
-                                System.out.println("Login with key");
+                                // TODO configure login key system with assigned quizzes
+                                System.out.println("Login with login key");
+                                String loginKey = input.readStringWithExactLength("Please enter your login key", 10);
+                                UserPlatform.displayQuizzes();
+                                int chosenQuiz = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3)));
+                                UserPlatform.runQuiz(chosenQuiz);
                                 break;
                             case 2:
                                 String email = input.readString("Enter your email");
@@ -93,7 +95,7 @@ public class Main {
                         help.help();
                         break;
                     case 0:
-                        System.out.println("Quit");
+                        System.out.println("Quitting");
                         quit = true;
                         break;
                 }
@@ -101,16 +103,19 @@ public class Main {
                 // Logged in menu
                 myMenu.displayLoggedInMenu(loggedInAccount);
 
-                ArrayList<Integer> liValidValues = new ArrayList<>(Arrays.asList(1, 2, 3, 0));
-                int liChoice = input.readValidInt("Please enter a choice", liValidValues);
+                int liChoice = -1;
+                if (Objects.equals(loggedInAccount.userDetails.get("accountType"), "businessPlus")) {
+                    liChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 4, 0)));
+                } else {
+                    liChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 0)));
+                }
 
                 switch (liChoice) {
                     case 1: // Create Certificates
                         if (Objects.equals(loggedInAccount.userDetails.get("accountType"), "personal")) {
 
                             myMenu.displayPersonalCertificateMenu();
-                            ArrayList<Integer> certMenuValidValues = new ArrayList<>(Arrays.asList(1, 2, 3, 0));
-                            int certMenuChoice = input.readValidInt("Please enter a choice", certMenuValidValues);
+                            int certMenuChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 0)));
 
                             if (certMenuChoice == 1) {
                                 // todo implement daily limit/check
@@ -121,16 +126,21 @@ public class Main {
                         } else if (Objects.equals(loggedInAccount.userDetails.get("accountType"), "business") || Objects.equals(loggedInAccount.userDetails.get("accountType"), "businessPlus")) {
 
                             myMenu.displayBusinessCertificateMenu();
-                            ArrayList<Integer> certMenuValidValues = new ArrayList<>(Arrays.asList(1, 2, 0));
-                            int certMenuChoice = input.readValidInt("Please enter a choice", certMenuValidValues);
+                            int certMenuChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 0)));
 
                             if (certMenuChoice == 1) {
                                 // Generate single certificates
                                 CustomCertificate cCertificate = new CustomCertificate();
-                                cCertificate.generateMultiSingleCerts();
+                                HashMap<String, String>[] certificates = cCertificate.generateMultiSingleCerts();
+                                cCertificate.certificateDelivery(certificates);
 
-                            } else if (certMenuChoice == 2) {
-                                // todo Generate certificates in bulk
+                             } else if (certMenuChoice == 2) {
+                                CustomCertificate cCertificate = new CustomCertificate();
+                                System.out.println("Add your CSV to the root directory of the project");
+                                input.pressEnterToContinue();
+                                String filename = input.readString("Now enter the exact filename including extension e.g. myfile.csv");
+                                HashMap<String,String>[] certificateFile = FileHandling.csvToHashmap(filename);
+                                cCertificate.certificateDelivery(certificateFile);
 
                             }
 
@@ -145,6 +155,10 @@ public class Main {
                     case 3: // Help
                         help.loggedInHelp(loggedInAccount);
                         // Todo add input/options
+                        break;
+                    case 0:
+                        System.out.println("Quitting");
+                        quit = true;
                         break;
                 }
             }

@@ -68,8 +68,7 @@ public class BusinessAccount extends Account {
         System.out.println("Your Price: " + monthlyPrice);
 
         myMenu.displayPaymentOptions();
-        ArrayList<Integer> paymentInputOptions = new ArrayList<>(Arrays.asList(1, 2));
-        int paymentOption = input.readValidInt("Please select an option", paymentInputOptions);
+        int paymentOption = input.readValidInt("Please select an option", new ArrayList<>(Arrays.asList(1, 2)));
 
         double amountDue;
         if (paymentOption == 1) {
@@ -77,7 +76,7 @@ public class BusinessAccount extends Account {
             amountDue = monthlyPrice;
         } else {
             super.userDetails.put("paymentOption", "annually");
-            DecimalFormat decimal = new DecimalFormat("##.00");
+            DecimalFormat decimal = new DecimalFormat("##.00"); // todo remove?
             amountDue = (monthlyPrice * 12) * 0.75;
             amountDue = Math.round(amountDue * 100.0) / 100.0;
         }
