@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class UserPlatform {
 
-    private static final String filename = "questions.json";
+    public static final String filename = "questions.json";
 
     public static void displayQuizzes() throws IOException {
         InputReader input = new InputReader();
@@ -28,7 +28,7 @@ public class UserPlatform {
 
     public static void runQuiz(int chosenQuiz) throws IOException {
         InputReader input = new InputReader();
-        JSONObject json = new JSONObject(Files.readAllBytes(Paths.get(UserPlatform.filename)));
+        JSONObject json = new JSONObject(readFile());
 
         JSONArray quizzes = json.getJSONArray("quizzes");
         JSONObject quiz = quizzes.getJSONObject(chosenQuiz - 1);
@@ -58,14 +58,13 @@ public class UserPlatform {
             }
         }
 
-        int numQuestions = 3;
+        int numQuestions = questions.length(); // Adjusted to consider the number of questions in the quiz
         double percentage = (double) marks / numQuestions * 100;
         System.out.println("Total: " + marks + "/" + numQuestions);
         System.out.println(percentage + "%");
     }
 
-    private static String readFile() throws IOException {
+    public static String readFile() throws IOException {
         return new String(Files.readAllBytes(Paths.get(UserPlatform.filename)));
     }
-
 }

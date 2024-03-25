@@ -2,6 +2,7 @@ import accounts.*;
 import certificateGenerator.BasicCertificate;
 import certificateGenerator.CustomCertificate;
 import services.Helper;
+import testPlatform.AdminPlatform;
 import testPlatform.UserPlatform;
 import testing.TestAccounts;
 import utils.FileHandling;
@@ -26,7 +27,7 @@ public class Main {
 
         // Hard Coded Login details to save time
         TestAccounts testAccounts = new TestAccounts();
-        loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
+        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         while (!quit) {
@@ -79,7 +80,7 @@ public class Main {
                                 System.out.println("Login with login key");
                                 String loginKey = input.readStringWithExactLength("Please enter your login key", 10);
                                 UserPlatform.displayQuizzes();
-                                int chosenQuiz = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3)));
+                                int chosenQuiz = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 4)));
                                 UserPlatform.runQuiz(chosenQuiz);
                                 break;
                             case 2:
@@ -154,7 +155,9 @@ public class Main {
                         break;
                     case 3: // Help
                         help.loggedInHelp(loggedInAccount);
-                        // Todo add input/options
+                        break;
+                    case 4: // Quiz Configuration
+                        AdminPlatform.createNewQuiz();
                         break;
                     case 0:
                         System.out.println("Quitting");

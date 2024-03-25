@@ -184,6 +184,24 @@ public class InputReader {
         return String.valueOf(year);
     }
 
+    public int readIntInRange(String prompt, int lowerBound, int upperBound) {
+        boolean valid = false;
+        int value = 0;
+        do {
+            try {
+                System.out.print(prompt + ": ");
+                String input = inputObject.nextLine();
+                value = Integer.parseInt(input);
+                valid = verifyIntInRange(value, lowerBound, upperBound);
+            } catch (NumberFormatException e) {
+                System.out.println("Sorry, please enter a valid integer");
+            } catch (Exception e) {
+                System.out.println("Sorry, please enter a value " + lowerBound + "-" + upperBound);
+            }
+        } while (!valid);
+        return value;
+    }
+
     // Verify an integer is in a range of values
     public boolean verifyIntChoiceInRange(int choice, ArrayList<Integer> validValues) {
         if (!validValues.contains(choice)) {
@@ -238,4 +256,11 @@ public class InputReader {
         return inputInt >= 2024;
     }
 
+    public boolean verifyIntInRange(int input, int lowerBound, int upperBound) throws Exception {
+        if ( !(input >= lowerBound && input <= upperBound) ) {
+            // Not in range
+            throw new Exception("Error: Input is not between " + lowerBound + "-" + upperBound);
+        }
+        return true;
+    }
 }

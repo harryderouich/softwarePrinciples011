@@ -5,6 +5,8 @@ import accounts.BusinessAccount;
 import accounts.PersonalAccount;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,6 +14,8 @@ import java.util.HashMap;
 import certificateGenerator.CertificatePrinter;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+
+import testPlatform.UserPlatform;
 
 public class FileHandling {
 
@@ -149,6 +153,13 @@ public class FileHandling {
             e.printStackTrace();
         }
         return certificates;
+    }
+
+    public static String readFile() throws IOException {
+        String content = new String(Files.readAllBytes(Paths.get(UserPlatform.filename)));
+        System.out.println("Content read from file:");
+        System.out.println(content); // Print out the content read from the file
+        return content;
     }
 
 }
