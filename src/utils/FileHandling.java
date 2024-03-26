@@ -21,8 +21,10 @@ public class FileHandling {
 
     // TODO Add check for already used email
 
-    public static final String pathToFile = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\user_accounts.csv";
+    public static final String userAccountPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\user_accounts.csv";
     static ArrayList<String> csvHeader = new ArrayList<>(Arrays.asList("email","password","accountType","businessName", "monthlyQuota","monthlyPrice","paymentOption","cardNumber"));
+    public static final String loginKeyPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\login_keys.csv";
+
 
     // Empty constructor
     private FileHandling() {
@@ -30,8 +32,8 @@ public class FileHandling {
 
     public static void writeUserDetails(HashMap<String, String> userDetails) {
         // First check if file is empty
-        boolean fileIsEmpty = isFileEmpty(pathToFile);
-        try (FileWriter fWriter = new FileWriter(pathToFile, true);
+        boolean fileIsEmpty = isFileEmpty(userAccountPath);
+        try (FileWriter fWriter = new FileWriter(userAccountPath, true);
              BufferedWriter bWriter = new BufferedWriter(fWriter)) {
             if (fileIsEmpty) {
                 // Write CSV headings if file is empty
@@ -46,7 +48,7 @@ public class FileHandling {
                     userDetails.getOrDefault("monthlyQuota", "") + "," +
                     userDetails.getOrDefault("monthlyPrice", "") + "," +
                     userDetails.getOrDefault("paymentOption", "") + "," +
-                    userDetails.getOrDefault("cardNumber", "") + "\n" +
+                    userDetails.getOrDefault("cardNumber", "") + "," +
                     userDetails.getOrDefault("cardMonthExpiry", "") + "," +
                     userDetails.getOrDefault("cardYearExpiry", "") + "," +
                     userDetails.getOrDefault("cardCVC", "");
@@ -57,8 +59,32 @@ public class FileHandling {
         }
     }
 
+    public static void writeLoginKeyAndUserDetails(HashMap<String, String> loginKeyDetails) {
+        // First check if file is empty
+        boolean fileIsEmpty = isFileEmpty(loginKeyPath);
+        try (FileWriter fWriter = new FileWriter(loginKeyPath, true);
+             BufferedWriter bWriter = new BufferedWriter(fWriter)) {
+            if (fileIsEmpty) {
+                // Write CSV headings if file is empty
+                bWriter.write("loginKey,quizIndex,Business Name,Participant Name,Course Name,Instructor Name\n");
+            }
+            // Construct userDetails row
+            String rowToWrite = loginKeyDetails.getOrDefault("loginKey", "") + "," +
+                    loginKeyDetails.getOrDefault("quizIndex", "") + "," +
+                    loginKeyDetails.getOrDefault("Business Name", "") + "," +
+                    loginKeyDetails.getOrDefault("Participant Name", "") + "," +
+                    loginKeyDetails.getOrDefault("Course Name", "") + "," +
+                    loginKeyDetails.getOrDefault("Instructor Name", "");
+            bWriter.write(rowToWrite); // Append the row to CSV
+            // System.out.println("DEBUG: userDetails written to CSV file.");
+        } catch (IOException e) {
+            // System.out.println("DEBUG: Error while writing userDetails to CSV file: " + e.getMessage());
+        }
+    }
+
+
     public static HashMap<String, String> authenticateUser(String email, String password) {
-        try (FileReader fReader = new FileReader(pathToFile);
+        try (FileReader fReader = new FileReader(userAccountPath);
              BufferedReader bReader = new BufferedReader(fReader)) {
             String line;
             boolean headerSkipped = false;

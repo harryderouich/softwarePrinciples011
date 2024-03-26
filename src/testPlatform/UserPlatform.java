@@ -25,6 +25,13 @@ public class UserPlatform {
         }
     }
 
+    public static String getQuizName(int quizIndex) throws IOException {
+        JSONObject json = new JSONObject(readFromFile());
+        JSONArray allQuizzes = json.getJSONArray("quizzes");
+        JSONObject quiz = allQuizzes.getJSONObject(quizIndex);
+        return quiz.getString("title");
+    }
+
     public static boolean runQuiz(int chosenQuiz) throws IOException {
         InputReader input = new InputReader();
         JSONObject json = new JSONObject(readFromFile());

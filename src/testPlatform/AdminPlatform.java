@@ -17,6 +17,9 @@ public class AdminPlatform {
 
     private static final String filename = "questions.json";
 
+    static ArrayList<String> loginKeyFields = new ArrayList<>(Arrays.asList("Business Name", "Participant Name", "Instructor Name"));
+
+
     public static void createNewQuiz() throws IOException {
         InputReader input = new InputReader();
 
@@ -81,11 +84,29 @@ public class AdminPlatform {
         int chosenQuiz = input.readValidInt("Select an option", UserPlatform.generateQuizIntList(UserPlatform.getNumberOfQuizzes()));
         String loginKey = UUID.randomUUID().toString().replaceAll("[^a-z0-9]", "").substring(0, 10);
 
-        System.out.println("Login Key '" + loginKey + "' generated for quiz " + chosenQuiz); // Todo create method to retrieve quiz title
+        HashMap<String, String> loginKeyData = captureLoginKeyUserData();
+        loginKeyData.put("loginKey", loginKey);
+        loginKeyData.put("quizIndex", String.valueOf(chosenQuiz));
+        loginKeyData.put("Course Name", UserPlatform.getQuizName(chosenQuiz));
+        // todo get Business name from loggedinaccount?
+        //  get instructor name from loggedinaccount?
+        //  date retrieved from current datetime
+        //  allow login/auth with login key
 
-        FileHandling.writeLoginKeyCSV(loginKey, chosenQuiz);
+        FileHandling.writeLoginKeyAndUserDetails(loginKeyData);
+        System.out.println("\nLogin Key '" + loginKey + "' generated for quiz '" + UserPlatform.getQuizName(chosenQuiz) + "' for user: "
+        + loginKeyData.get("Participant Name"));
+    }
 
-        // todo generate prefilled data for user
-        // HashMap<String, String> userData = BasicCertificate.singleCertCapture();
+    public static HashMap<String, String> captureLoginKeyUserData() { // todo combine this/modify singleCertCapture to take a parameter (the fields array) so only one method is needed
+        System.out.println("Please enter the data to prefill the user's certificate");
+        HashMap<String, String> userData = new HashMap<>();
+
+        for (String s : loginKeyFields) {
+            InputReader input = new InputReader();
+            userData.put(s, input.readString(s));
+        }
+
+        return userData;
     }
 }
