@@ -92,15 +92,13 @@ public class AdminPlatform {
         loginKeyData.put("loginKey", loginKey);
         loginKeyData.put("quizIndex", String.valueOf(chosenQuiz));
         loginKeyData.put("Course Name", UserPlatform.getQuizName(chosenQuiz));
-        //  todo date retrieved from current datetime
-        //   allow login/auth with login key
 
         FileHandling.writeLoginKeyAndUserDetails(loginKeyData);
         System.out.println("\nLogin Key '" + loginKey + "' generated for quiz '" + UserPlatform.getQuizName(chosenQuiz) + "' for user: "
         + loginKeyData.get("Participant Name"));
     }
 
-    public static HashMap<String, String> captureLoginKeyUserData() { // todo combine this/modify singleCertCapture to take a parameter (the fields array) so only one method is needed
+    public static HashMap<String, String> captureLoginKeyUserData() {
         System.out.println("Please enter the data to prefill the user's certificate");
         HashMap<String, String> userData = new HashMap<>();
 

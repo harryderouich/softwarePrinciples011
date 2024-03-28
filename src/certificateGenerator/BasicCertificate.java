@@ -16,17 +16,17 @@ public class BasicCertificate {
 
     public void generateSingleCert() {
         System.out.println("Creating a single certificate.");
-        HashMap <String, String> certificate = singleCertCapture();
+        HashMap <String, String> certificate = certCapture("Please enter the following details", certificateFields);
         displaySingleCertificate(certificate);
         System.out.println("Certificate created successfully");
         input.pressEnterToContinue();
         }
 
-    public static HashMap<String, String> singleCertCapture() {
-        System.out.println("Please enter the following details");
+    public static HashMap<String, String> certCapture(String prompt, ArrayList<String> fieldsArray) {
+        System.out.println(prompt);
         HashMap<String, String> certificate = new HashMap<>();
 
-        for (String s : certificateFields) {
+        for (String s : fieldsArray) {
             certificate.put(s, input.readString(s));
         }
 

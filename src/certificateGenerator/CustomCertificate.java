@@ -30,15 +30,16 @@ public class CustomCertificate extends BasicCertificate {
             customFieldChoice = input.readValidInt("Please enter a choice", customFieldValidChoice);
 
             if (customFieldChoice == 1) {
-                super.certificateFields.add(input.readString("Enter the custom field label"));
+                certificateFields.add(input.readString("Enter the custom field label"));
                 System.out.println("Field Added!\n");
             }
         }
 
         for (int i = 0; i < numOfCerts; i++) {
             System.out.println("Certificate " + (i+1) + "/" + numOfCerts);
-            certificates[i] = super.singleCertCapture();
+            certificates[i] = FileHandling.reorderUserDetails(certCapture("Please enter the following details", certificateFields));
             System.out.println(" ");
+
         }
 
         System.out.println("Certificates ready!");

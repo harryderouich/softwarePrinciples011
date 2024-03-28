@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import certificateGenerator.CertificatePrinter;
 import com.opencsv.CSVReader;
@@ -22,9 +23,9 @@ public class FileHandling {
     // TODO Add check for already used email
 
     public static final String userAccountPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\user_accounts.csv";
-    static ArrayList<String> userAccountCsvHeader = new ArrayList<>(Arrays.asList("email","password","accountType","businessName", "monthlyQuota","monthlyPrice","paymentOption","cardNumber"));
+    public static final ArrayList<String> userAccountCsvHeader = new ArrayList<>(Arrays.asList("email","password","accountType","businessName", "monthlyQuota","monthlyPrice","paymentOption","cardNumber"));
     public static final String loginKeyPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\login_keys.csv";
-    static ArrayList<String> loginKeyCsvHeader = new ArrayList<>(Arrays.asList("loginKey","quizIndex","Business Name","Participant Name","Course Name","Instructor Name"));
+    public static final ArrayList<String> loginKeyCsvHeader = new ArrayList<>(Arrays.asList("loginKey","quizIndex","Business Name","Participant Name","Course Name","Instructor Name"));
 
 
     // Empty constructor
@@ -207,7 +208,7 @@ public class FileHandling {
              BufferedReader bReader = new BufferedReader(fReader)) {
             String line;
             boolean headerSkipped = false;
-            while ((line = bReader.readLine()) != null) { // todo doesn't seem to be checking more than just first data line
+            while ((line = bReader.readLine()) != null) {
                 if (!headerSkipped) {
                     headerSkipped = true;
                     continue; // Skip the CSV header row so user cannot log in with "loginKey"
@@ -234,4 +235,18 @@ public class FileHandling {
         return null;
     }
 
+    public static HashMap<String, String> reorderUserDetails(HashMap<String, String> loggedInUser) {
+        // Reorder accountDetails
+        String[] loginKeyAllKeys = {"loginKey", "quizIndex", "Business Name", "Participant Name", "Course Name", "Date", "Instructor Name"};
+
+        HashMap<String, String> rearrangedUserDetails = new LinkedHashMap<>();
+        for (String key : loginKeyAllKeys) {
+            if (loggedInUser.containsKey(key)) {
+                rearrangedUserDetails.put(key, loggedInUser.get(key));
+            }
+        }
+        rearrangedUserDetails.putAll(loggedInUser);
+
+        return rearrangedUserDetails;
+    }
 }

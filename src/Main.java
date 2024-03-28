@@ -30,7 +30,7 @@ public class Main {
 
         // Hard Coded Login details to save time
         TestAccounts testAccounts = new TestAccounts();
-        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
+        loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         while (!quit) {
@@ -82,7 +82,7 @@ public class Main {
                                 System.out.println("Login with login key");
                                 String loginKey = input.readStringWithExactLength("Please enter your login key", 10);
                                 HashMap<String, String> loggedInUser = FileHandling.authenticateLoginKey(loginKey);
-                                // Todo restore original order of fields in loggedInUser HashMap to resemble regular capture
+
                                 boolean passed = false;
                                 if (loggedInUser != null) {
                                     System.out.println("\nAuthenticated User: " + loggedInUser.get("Participant Name") + "\n");
@@ -95,7 +95,9 @@ public class Main {
                                     String currentDate = new SimpleDateFormat("dd/MM/yy").format(new Date());
                                     loggedInUser.put("Date", currentDate);
                                     System.out.println("\n");
-                                    CertificatePrinter.printCertificate(loggedInUser);
+                                    HashMap<String, String> reorderedUserDetails = new HashMap<>();
+                                    reorderedUserDetails = FileHandling.reorderUserDetails(loggedInUser);
+                                    CertificatePrinter.printCertificate(reorderedUserDetails);
                                     input.pressEnterToContinue();
                                 }
                                 break;

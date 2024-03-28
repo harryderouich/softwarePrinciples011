@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class CertificatePrinter {
 
     public static void printCertificate(HashMap<String, String> certificateData) {
-        // Attempt to remove loginKey and quizIndex so they are not used for width calculations or printed
+        // Attempt to remove loginKey and quizIndex, so they are not used for width calculations or printed
         if (certificateData.containsKey("loginKey")) {
             certificateData.remove("loginKey");
             certificateData.remove("quizIndex");
