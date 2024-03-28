@@ -22,8 +22,9 @@ public class FileHandling {
     // TODO Add check for already used email
 
     public static final String userAccountPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\user_accounts.csv";
-    static ArrayList<String> csvHeader = new ArrayList<>(Arrays.asList("email","password","accountType","businessName", "monthlyQuota","monthlyPrice","paymentOption","cardNumber"));
+    static ArrayList<String> userAccountCsvHeader = new ArrayList<>(Arrays.asList("email","password","accountType","businessName", "monthlyQuota","monthlyPrice","paymentOption","cardNumber"));
     public static final String loginKeyPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\login_keys.csv";
+    static ArrayList<String> loginKeyCsvHeader = new ArrayList<>(Arrays.asList("loginKey","quizIndex","Business Name","Participant Name","Course Name","Instructor Name"));
 
 
     // Empty constructor
@@ -74,7 +75,7 @@ public class FileHandling {
                     loginKeyDetails.getOrDefault("Business Name", "") + "," +
                     loginKeyDetails.getOrDefault("Participant Name", "") + "," +
                     loginKeyDetails.getOrDefault("Course Name", "") + "," +
-                    loginKeyDetails.getOrDefault("Instructor Name", "");
+                    loginKeyDetails.getOrDefault("Instructor Name", "") + "\n";
             bWriter.write(rowToWrite); // Append the row to CSV
             // System.out.println("DEBUG: userDetails written to CSV file.");
         } catch (IOException e) {
@@ -102,7 +103,7 @@ public class FileHandling {
                     // Iterate over each element in the row and repopulate the HashMap
                     for (int i = 0; i < rowToList.length; i++) {
                         // Use the CSV Header list as the key and the element in the list as the value
-                        accountDetails.put(csvHeader.get(i), rowToList[i]);
+                        accountDetails.put(userAccountCsvHeader.get(i), rowToList[i]);
                     }
                     return accountDetails; // Return/finish the loop/s and return HashMap with user's details
                 }
@@ -198,6 +199,39 @@ public class FileHandling {
         } catch (IOException e) {
             System.out.println("Error writing CSV file: " + e);
         }
+    }
+
+    public static HashMap<String, String> authenticateLoginKey(String loginKey) {
+        InputReader input = new InputReader();
+        try (FileReader fReader = new FileReader(loginKeyPath);
+             BufferedReader bReader = new BufferedReader(fReader)) {
+            String line;
+            boolean headerSkipped = false;
+            while ((line = bReader.readLine()) != null) { // todo doesn't seem to be checking more than just first data line
+                if (!headerSkipped) {
+                    headerSkipped = true;
+                    continue; // Skip the CSV header row so user cannot log in with "loginKey"
+                }
+                String[] rowToList = line.split(","); // Create a list with each element of the login key row
+                if (rowToList.length == 6 && rowToList[0].equals(loginKey)) {
+                    // System.out.println("DEBUG: User successfully authenticated.");
+
+                    // Once authenticated, extract account details from the user's row list
+                    HashMap<String, String> accountDetails = new HashMap<>(); // To store the details
+                    // Iterate over each element in the row and repopulate the HashMap
+                    for (int i = 0; i < rowToList.length; i++) {
+                        // Use the CSV Header list as the key and the element in the list as the value
+                        accountDetails.put(loginKeyCsvHeader.get(i), rowToList[i]);
+                    }
+                    return accountDetails; // Return/finish the loop/s and return HashMap with user's details
+                }
+            }
+            System.out.println("Error: Login key not found");
+        } catch (IOException e) {
+            // System.out.println("DEBUG: Error when reading userDetails from CSV file: " + e.getMessage());
+            return null; // Don't log them in
+        }
+        return null;
     }
 
 }

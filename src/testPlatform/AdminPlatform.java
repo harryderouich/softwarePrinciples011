@@ -1,5 +1,7 @@
 package testPlatform;
 
+import accounts.Account;
+import accounts.BusinessAccount;
 import certificateGenerator.BasicCertificate;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,7 +19,7 @@ public class AdminPlatform {
 
     private static final String filename = "questions.json";
 
-    static ArrayList<String> loginKeyFields = new ArrayList<>(Arrays.asList("Business Name", "Participant Name", "Instructor Name"));
+    static ArrayList<String> loginKeyFields = new ArrayList<>(Arrays.asList("Participant Name", "Instructor Name"));
 
 
     public static void createNewQuiz() throws IOException {
@@ -76,7 +78,7 @@ public class AdminPlatform {
         System.out.println("'" + quizTitle + "' has been added successfully");
     }
 
-    public static void generateLoginKeys() throws IOException {
+    public static void generateLoginKeys(Account loggedInAccount) throws IOException {
         InputReader input = new InputReader();
         System.out.println("Choose a quiz to generate a login key for");
         UserPlatform.displayQuizzes();
@@ -85,13 +87,13 @@ public class AdminPlatform {
         String loginKey = UUID.randomUUID().toString().replaceAll("[^a-z0-9]", "").substring(0, 10);
 
         HashMap<String, String> loginKeyData = captureLoginKeyUserData();
+        // attempt to get business name from account, if not request
+        loginKeyData.put("Business Name", loggedInAccount.userDetails.get("businessName")); // Use loggedInAccount
         loginKeyData.put("loginKey", loginKey);
         loginKeyData.put("quizIndex", String.valueOf(chosenQuiz));
         loginKeyData.put("Course Name", UserPlatform.getQuizName(chosenQuiz));
-        // todo get Business name from loggedinaccount?
-        //  get instructor name from loggedinaccount?
-        //  date retrieved from current datetime
-        //  allow login/auth with login key
+        //  todo date retrieved from current datetime
+        //   allow login/auth with login key
 
         FileHandling.writeLoginKeyAndUserDetails(loginKeyData);
         System.out.println("\nLogin Key '" + loginKey + "' generated for quiz '" + UserPlatform.getQuizName(chosenQuiz) + "' for user: "

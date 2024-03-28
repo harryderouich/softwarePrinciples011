@@ -1,5 +1,6 @@
 import accounts.*;
 import certificateGenerator.BasicCertificate;
+import certificateGenerator.CertificatePrinter;
 import certificateGenerator.CustomCertificate;
 import services.Helper;
 import testPlatform.AdminPlatform;
@@ -9,6 +10,8 @@ import utils.FileHandling;
 import utils.InputReader;
 import utils.Menu;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +30,7 @@ public class Main {
 
         // Hard Coded Login details to save time
         TestAccounts testAccounts = new TestAccounts();
-        loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
+        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         while (!quit) {
@@ -76,18 +79,24 @@ public class Main {
 
                         switch (loginChoice) {
                             case 1:
-                                // TODO configure login key system with assigned quizzes
                                 System.out.println("Login with login key");
                                 String loginKey = input.readStringWithExactLength("Please enter your login key", 10);
-                                // Todo create login system using loginKey to retrieve chosenQuiz (and later user details hashmap)
+                                HashMap<String, String> loggedInUser = FileHandling.authenticateLoginKey(loginKey);
+                                // Todo restore original order of fields in loggedInUser HashMap to resemble regular capture
+                                boolean passed = false;
+                                if (loggedInUser != null) {
+                                    System.out.println("\nAuthenticated User: " + loggedInUser.get("Participant Name") + "\n");
+                                    passed = UserPlatform.runQuiz(Integer.parseInt(loggedInUser.get("quizIndex")));
+                                } else {
+                                    System.out.println("Error: Login unsuccessful.");
+                                }
 
-                                // Todo these 2 lines will be removed
-                                UserPlatform.displayQuizzes();
-                                int chosenQuiz = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 4))); // Todo make dynamic
-
-                                boolean passed = UserPlatform.runQuiz(chosenQuiz);
                                 if (passed) {
-                                    // Todo create prefilled hashmap to generate certificate upon passing
+                                    String currentDate = new SimpleDateFormat("dd/MM/yy").format(new Date());
+                                    loggedInUser.put("Date", currentDate);
+                                    System.out.println("\n");
+                                    CertificatePrinter.printCertificate(loggedInUser);
+                                    input.pressEnterToContinue();
                                 }
                                 break;
                             case 2:
@@ -171,7 +180,7 @@ public class Main {
                                 AdminPlatform.createNewQuiz();
                                 break;
                             case 2: // Generate Login Keys
-                                AdminPlatform.generateLoginKeys();
+                                AdminPlatform.generateLoginKeys(loggedInAccount);
                                 input.pressEnterToContinue();
                         }
 
