@@ -1,11 +1,13 @@
 package utils;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@SuppressWarnings("SameReturnValue")
 public class InputReader {
-    Scanner inputObject;
+    final Scanner inputObject;
 
     public InputReader() {
         inputObject = new Scanner(System.in);
@@ -79,7 +81,7 @@ public class InputReader {
         return inputString;
     }
 
-    // Read strings and validate against a minimum length
+    // Read strings and validate against an exact length
     public String readStringWithExactLength(String prompt, int exactLength) {
         boolean valid = false;
         String inputString = null;
@@ -89,7 +91,7 @@ public class InputReader {
                 inputString = inputObject.nextLine();
                 valid = verifyExactStringLength(inputString, exactLength);
             } catch (Exception e) {
-                System.out.println("Error: Must be at exactly " + exactLength + " characters. Please try again");
+                System.out.println("Error: Must be exactly " + exactLength + " characters. Please try again");
             }
         } while (!valid);
         return inputString;
@@ -132,7 +134,7 @@ public class InputReader {
 
     private boolean verifyIntPositive(int value) throws Exception {
         if (!(value > 0)) {
-            throw new Exception("Error: Invalid card number (length not 16)");
+            throw new Exception("Error: Value is not positive");
         }
         return true;
     }
@@ -173,7 +175,7 @@ public class InputReader {
                 year = inputObject.nextInt();
                 if (String.valueOf(year).length() == 2) {
                     year += 2000;
-                    System.out.println("DEBUG: year " + year);
+                    // System.out.println("DEBUG: year " + year);
                 }
                 valid = yearIsInFuture(year);
             } catch (Exception e) {
@@ -236,7 +238,7 @@ public class InputReader {
 
     // Verify a string follows a given email format (regular expression)
     public boolean verifyEmailFormat(String inputString) throws Exception {
-        if (!inputString.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\\.{1}[A-Za-z]{2,}\\.?[A-Za-z?]*\\b")) {
+        if (!inputString.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}\\.?[A-Za-z?]*\\b")) {
             throw new Exception("Error: Invalid email format");
         }
         return true;
@@ -248,14 +250,27 @@ public class InputReader {
         if (!(sanitisedCardNumberString.length() == 16)) {
             throw new Exception("Error: Invalid card number (length not 16)");
         }
+
+        // Check string contains integers only
+        char[] charArray = inputString.toCharArray();
+        for (char c : charArray) {
+            if (!(Character.isDigit(c))) {
+                throw new Exception("Error: Invalid card number (contains non-digit characters)");
+            }
+        }
         return true;
     }
 
     // Verify a year is in the future
-    public boolean yearIsInFuture(int inputInt) {
-        return inputInt >= 2024;
+    public boolean yearIsInFuture(int inputInt) throws Exception {
+        int currentYear = Year.now().getValue();
+        if (!(inputInt >= currentYear)) {
+            throw new Exception("Error: Year is not in the future");
+        }
+        return true;
     }
 
+    // Verify an integer is between a lower and upper boundary
     public boolean verifyIntInRange(int input, int lowerBound, int upperBound) throws Exception {
         if ( !(input >= lowerBound && input <= upperBound) ) {
             // Not in range

@@ -2,11 +2,10 @@ package testing;
 
 import java.util.HashMap;
 
+@SuppressWarnings("unused")
 public class TestAccounts {
 
     public TestAccounts() {
-
-
 
     }
 

@@ -5,9 +5,9 @@ import utils.InputReader;
 
 public class Account {
 
-    public HashMap<String, String> userDetails = new HashMap<>();
+    public final HashMap<String, String> userDetails = new HashMap<>();
 
-    InputReader input = new InputReader();
+    final InputReader input = new InputReader();
 
     public Account(String accountType) {
         // Capture email and password (used for all accounts)

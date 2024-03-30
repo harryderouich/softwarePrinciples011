@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Helper {
-    InputReader input = new InputReader();
-    Menu myMenu = new Menu();
+    final InputReader input = new InputReader();
+    final Menu myMenu = new Menu();
 
     public Helper() {
 
@@ -90,7 +90,7 @@ public class Helper {
 
     public void openTicket(Account loggedInAccount) {
         System.out.println("Leave a message detailing your enquiry and a member of our team will get back to you");
-        String query = input.readString("Enter your message");
+        @SuppressWarnings("unused") String query = input.readString("Enter your message");
         System.out.println("Submitted! We will respond to you on " + loggedInAccount.userDetails.get("email") +
                 " as soon as possible");
         input.pressEnterToContinue();

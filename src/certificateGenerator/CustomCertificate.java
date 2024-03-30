@@ -10,8 +10,8 @@ import java.util.HashMap;
 
 public class CustomCertificate extends BasicCertificate {
 
-    InputReader input = new InputReader();
-    Menu myMenu = new Menu();
+    final InputReader input = new InputReader();
+    final Menu myMenu = new Menu();
 
     public CustomCertificate() {
 

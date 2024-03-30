@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 public class BasicCertificate {
 
-    static InputReader input = new InputReader();
-    static ArrayList<String> certificateFields = new ArrayList<>(Arrays.asList("Business Name", "Participant Name", "Course Name", "Date", "Instructor Name"));
+    static final InputReader input = new InputReader();
+    static final ArrayList<String> certificateFields = new ArrayList<>(Arrays.asList("Business Name", "Participant Name", "Course Name", "Date", "Instructor Name"));
 
     public BasicCertificate() { // No params - Personal Account
     }

@@ -1,4 +1,4 @@
-email,password,accountType,businessName,monthlyQuota,monthlyPrice,paymentOption,cardNumber
-harry@biz.net,password2,business,Bizz,500,159,annually,1234567812345678
+email,password,accountType,businessName,monthlyQuota,monthlyPrice,paymentOption,cardNumber,yearExpiry,monthExpiry,cardCVC
+harry@biz.net,password2,business,MyBusiness,500,159,annually,1234567812345678
 harry@aol.com,password1,personal,,,,,
-harry@aol.co.uk,password1,personal,,,,,
+harry@business.com,password3,businessPlus,Training2u,2500,699,annually,1234 1234 1234 1234,12,2025,123

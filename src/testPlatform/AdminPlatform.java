@@ -1,8 +1,6 @@
 package testPlatform;
 
 import accounts.Account;
-import accounts.BusinessAccount;
-import certificateGenerator.BasicCertificate;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.FileHandling;
@@ -19,7 +17,7 @@ public class AdminPlatform {
 
     private static final String filename = "questions.json";
 
-    static ArrayList<String> loginKeyFields = new ArrayList<>(Arrays.asList("Participant Name", "Instructor Name"));
+    static final ArrayList<String> loginKeyFields = new ArrayList<>(Arrays.asList("Participant Name", "Instructor Name"));
 
 
     public static void createNewQuiz() throws IOException {
@@ -57,11 +55,11 @@ public class AdminPlatform {
         // Todo remove check?
         JSONObject jsonObject;
         String fileContent = UserPlatform.readFromFile();
-        if (fileContent.isEmpty()) {
-            jsonObject = new JSONObject();
-            jsonObject.put("quizzes", new JSONArray());
+        if (fileContent.isEmpty()) { // Check if JSON file exists/is empty
+            jsonObject = new JSONObject(); // Create a new empty JSONObject
+            jsonObject.put("quizzes", new JSONArray()); // Create a new JSONArray with key "quizzes"
         } else {
-            jsonObject = new JSONObject(fileContent);
+            jsonObject = new JSONObject(fileContent); // Create a new JSONObject using the parsed file content
         }
 
         // Retrieve the existing quizzes

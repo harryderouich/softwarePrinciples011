@@ -1,3 +1,10 @@
+/**
+ * Module: 2023 MOD003484 TRI2 F01CAM
+ * Assignment: 011 Element Design and implementation report
+ * Author: Harry Derouich (SID 2304874)
+ * Team: Skystone
+ */
+
 import accounts.*;
 import certificateGenerator.BasicCertificate;
 import certificateGenerator.CertificatePrinter;
@@ -29,8 +36,8 @@ public class Main {
         Account loggedInAccount = null;
 
         // Hard Coded Login details to save time
-        TestAccounts testAccounts = new TestAccounts();
-        loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
+        @SuppressWarnings("unused") TestAccounts testAccounts = new TestAccounts();
+        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         while (!quit) {
@@ -95,7 +102,7 @@ public class Main {
                                     String currentDate = new SimpleDateFormat("dd/MM/yy").format(new Date());
                                     loggedInUser.put("Date", currentDate);
                                     System.out.println("\n");
-                                    HashMap<String, String> reorderedUserDetails = new HashMap<>();
+                                    HashMap<String, String> reorderedUserDetails;
                                     reorderedUserDetails = FileHandling.reorderUserDetails(loggedInUser);
                                     CertificatePrinter.printCertificate(reorderedUserDetails);
                                     input.pressEnterToContinue();
@@ -122,7 +129,7 @@ public class Main {
                 // Logged in menu
                 myMenu.displayLoggedInMenu(loggedInAccount);
 
-                int liChoice = -1;
+                int liChoice;
                 if (Objects.equals(loggedInAccount.userDetails.get("accountType"), "businessPlus")) {
                     liChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 4, 0)));
                 } else {
@@ -157,7 +164,7 @@ public class Main {
                                 CustomCertificate cCertificate = new CustomCertificate();
                                 System.out.println("Add your CSV to the root directory of the project");
                                 input.pressEnterToContinue();
-                                String filename = input.readString("Now enter the exact filename including extension e.g. myfile.csv");
+                                String filename = input.readString("Now enter the exact filename including extension e.g. file.csv");
                                 HashMap<String,String>[] certificateFile = FileHandling.csvToHashmap(filename);
                                 cCertificate.certificateDelivery(certificateFile);
 

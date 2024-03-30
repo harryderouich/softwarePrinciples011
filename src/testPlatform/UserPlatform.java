@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class UserPlatform {
 
-    public static final String filename = "questions.json";
+    public static final String QUESTIONS_JSON_FILENAME = "questions.json";
 
     public static void displayQuizzes() throws IOException {
         JSONObject json = new JSONObject(readFromFile());
@@ -84,7 +84,7 @@ public class UserPlatform {
 
 
     public static String readFromFile() throws IOException {
-        return new String(Files.readAllBytes(Paths.get(UserPlatform.filename)));
+        return new String(Files.readAllBytes(Paths.get(UserPlatform.QUESTIONS_JSON_FILENAME)));
     }
 
     public static int getNumberOfQuizzes() throws IOException {

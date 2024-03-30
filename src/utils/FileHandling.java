@@ -5,8 +5,6 @@ import accounts.BusinessAccount;
 import accounts.PersonalAccount;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,14 +14,12 @@ import certificateGenerator.CertificatePrinter;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
-import testPlatform.UserPlatform;
-
 public class FileHandling {
 
     // TODO Add check for already used email
 
     public static final String userAccountPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\user_accounts.csv";
-    public static final ArrayList<String> userAccountCsvHeader = new ArrayList<>(Arrays.asList("email","password","accountType","businessName", "monthlyQuota","monthlyPrice","paymentOption","cardNumber"));
+    public static final ArrayList<String> userAccountCsvHeader = new ArrayList<>(Arrays.asList("email","password","accountType","businessName", "monthlyQuota","monthlyPrice","paymentOption","cardNumber","yearExpiry","monthExpiry","cardCVC"));
     public static final String loginKeyPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\login_keys.csv";
     public static final ArrayList<String> loginKeyCsvHeader = new ArrayList<>(Arrays.asList("loginKey","quizIndex","Business Name","Participant Name","Course Name","Instructor Name"));
 
@@ -100,13 +96,7 @@ public class FileHandling {
                     // System.out.println("DEBUG: User successfully authenticated.");
 
                     // Once authenticated, extract account details from the user's row list
-                    HashMap<String, String> accountDetails = new HashMap<>(); // To store the details
-                    // Iterate over each element in the row and repopulate the HashMap
-                    for (int i = 0; i < rowToList.length; i++) {
-                        // Use the CSV Header list as the key and the element in the list as the value
-                        accountDetails.put(userAccountCsvHeader.get(i), rowToList[i]);
-                    }
-                    return accountDetails; // Return/finish the loop/s and return HashMap with user's details
+                    return getHashMapFromRow(rowToList, userAccountCsvHeader); // Return/finish the loop/s and return HashMap with user's details
                 }
             }
             // System.out.println("DEBUG: Auth failed, incorrect email/password.");
@@ -117,6 +107,16 @@ public class FileHandling {
         }
     }
 
+    private static HashMap<String, String> getHashMapFromRow(String[] rowToList, ArrayList<String> userAccountCsvHeader) {
+        HashMap<String, String> accountDetails = new HashMap<>(); // To store the details
+        // Iterate over each element in the row and repopulate the HashMap
+        for (int i = 0; i < rowToList.length; i++) {
+            // Use the CSV Header list as the key and the element in the list as the value
+            accountDetails.put(userAccountCsvHeader.get(i), rowToList[i]);
+        }
+        return accountDetails;
+    }
+
     public static Account authenticateAndRecreateAccount(String email, String password) {
         // Authenticate the user using Username and Password, then take the returned AccountDetails
         HashMap<String, String> accountDetails = authenticateUser(email, password);
@@ -124,9 +124,8 @@ public class FileHandling {
         // Recreate the account using HashMap populated from CSV file row
         if (accountDetails != null) {
             // Recreate account depending on whether it's personal or business/+
-            Account account = recreateAccount(accountDetails);
             // System.out.println("DEBUG: Account recreated, returning");
-            return account;
+            return recreateAccount(accountDetails);
         }
         return null;
     }
@@ -137,7 +136,7 @@ public class FileHandling {
             case "personal":
                 // System.out.println("DEBUG: Recreating personal acc");
                 return new PersonalAccount(accountDetails);
-            case "business", "businesspPlus":
+            case "business", "businessPlus":
                 // System.out.println("DEBUG: Recreating business acc");
                 return new BusinessAccount(accountDetails);
         }
@@ -157,7 +156,6 @@ public class FileHandling {
             CertificatePrinter.printCertificates(certificates);
         } catch (Exception e) {
             System.err.println("Error: Certificates couldn't be written to file");
-            e.printStackTrace();
         } finally {
             System.setOut(console);
         }
@@ -178,32 +176,12 @@ public class FileHandling {
                 certificates[row - 1] = rowData;
             }
         } catch (IOException | CsvException e) {
-            e.printStackTrace();
+            System.err.println("Error: Couldn't read CSV");
         }
         return certificates;
     }
-
-    public static String readFile() throws IOException {
-        String content = new String(Files.readAllBytes(Paths.get(UserPlatform.filename)));
-        System.out.println("Content read from file:");
-        System.out.println(content); // Print out the content read from the file
-        return content;
-    }
-
-    public static void writeLoginKeyCSV(String loginKey, int quizIndex) {
-        String loginKeysCSV = "login_keys.csv";
-
-        try (FileWriter writer = new FileWriter(loginKeysCSV, true)) {
-            writer.append(loginKey).append(",").append(String.valueOf(quizIndex)).append("\n");
-            writer.flush();
-            System.out.println("Login keys saved to file " + loginKeysCSV);
-        } catch (IOException e) {
-            System.out.println("Error writing CSV file: " + e);
-        }
-    }
-
+    
     public static HashMap<String, String> authenticateLoginKey(String loginKey) {
-        InputReader input = new InputReader();
         try (FileReader fReader = new FileReader(loginKeyPath);
              BufferedReader bReader = new BufferedReader(fReader)) {
             String line;
@@ -218,13 +196,7 @@ public class FileHandling {
                     // System.out.println("DEBUG: User successfully authenticated.");
 
                     // Once authenticated, extract account details from the user's row list
-                    HashMap<String, String> accountDetails = new HashMap<>(); // To store the details
-                    // Iterate over each element in the row and repopulate the HashMap
-                    for (int i = 0; i < rowToList.length; i++) {
-                        // Use the CSV Header list as the key and the element in the list as the value
-                        accountDetails.put(loginKeyCsvHeader.get(i), rowToList[i]);
-                    }
-                    return accountDetails; // Return/finish the loop/s and return HashMap with user's details
+                    return getHashMapFromRow(rowToList, loginKeyCsvHeader); // Return/finish the loop/s and return HashMap with user's details
                 }
             }
             System.out.println("Error: Login key not found");
