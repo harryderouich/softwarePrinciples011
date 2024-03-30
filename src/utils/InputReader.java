@@ -204,6 +204,21 @@ public class InputReader {
         return value;
     }
 
+    public String readIntWithExactLength(String prompt, int lowerLengthBound, int upperLengthBound) {
+        boolean valid = false;
+        String inputString = null;
+        do {
+            try {
+                System.out.print(prompt + ": ");
+                inputString = inputObject.nextLine();
+                valid = verifyAllDigitsAndLengthInRange(inputString, lowerLengthBound, upperLengthBound);
+            } catch (Exception e) {
+                System.out.println("Error: Please enter a " + lowerLengthBound + "-" + upperLengthBound + "digit number");
+            }
+        } while (!valid);
+        return inputString;
+    }
+
     // Verify an integer is in a range of values
     public boolean verifyIntChoiceInRange(int choice, ArrayList<Integer> validValues) {
         if (!validValues.contains(choice)) {
@@ -252,7 +267,7 @@ public class InputReader {
         }
 
         // Check string contains integers only
-        char[] charArray = inputString.toCharArray();
+        char[] charArray = sanitisedCardNumberString.toCharArray();
         for (char c : charArray) {
             if (!(Character.isDigit(c))) {
                 throw new Exception("Error: Invalid card number (contains non-digit characters)");
@@ -278,4 +293,24 @@ public class InputReader {
         }
         return true;
     }
+
+    // Verify an input is all digits and an exact length
+    public boolean verifyAllDigitsAndLengthInRange(String inputString, int lowerLengthBound, int upperLengthBound) throws Exception {
+        // Check string contains integers only
+        char[] charArray = inputString.toCharArray();
+        for (char c : charArray) {
+            if (!(Character.isDigit(c))) {
+                throw new Exception("Error: Input contains non-digit characters");
+            }
+        }
+
+        // Check string is an exact length
+        if (!(inputString.length() >= lowerLengthBound && inputString.length() <= upperLengthBound)) {
+            throw new Exception("Error: Input is not " + lowerLengthBound + "-" + upperLengthBound + " digits");
+        }
+        return true;
+    }
+
+    // todo incorporate exception e into error messages instead of hard coding
+
 }

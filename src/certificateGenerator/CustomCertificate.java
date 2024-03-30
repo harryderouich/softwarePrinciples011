@@ -59,14 +59,15 @@ public class CustomCertificate extends BasicCertificate {
                 CertificatePrinter.printCertificates(certificates);
                 break;
             case 2: // Export to file
-                String filename = input.readStringWithLength("Enter a file name to be used",1);
+                String filename = input.readStringWithLength("Enter a file name to be used, excluding extension",1);
                 FileHandling.writeCertsToFile(certificates, filename);
                 System.out.println("Certificates written to file successfully!");
                 break;
             case 3: // Schedule delivery
                 String dateToSend = input.readString("Enter the date to send the certificates (yyyy-mm-dd)");
                 String timeToSend = input.readString("Enter the time to send the certificates (hh:mm)");
-                FileHandling.writeCertsToFile(certificates, dateToSend + " " + timeToSend);
+                String fileOutputName = dateToSend + " " + timeToSend;
+                FileHandling.writeCertsToFile(certificates, fileOutputName.replaceAll("[\\\\/:*?\"<>|]", ""));
                 System.out.println("Success. Certificates will be sent on " + dateToSend + " " + timeToSend);
                 break;
         }

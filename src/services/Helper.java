@@ -3,6 +3,7 @@ package services;
 import accounts.Account;
 import utils.InputReader;
 import utils.Menu;
+import utils.FileHandling;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,6 +92,9 @@ public class Helper {
     public void openTicket(Account loggedInAccount) {
         System.out.println("Leave a message detailing your enquiry and a member of our team will get back to you");
         @SuppressWarnings("unused") String query = input.readString("Enter your message");
+
+        FileHandling.writeSupportTicketToFile(query, loggedInAccount.userDetails.get("email"));
+
         System.out.println("Submitted! We will respond to you on " + loggedInAccount.userDetails.get("email") +
                 " as soon as possible");
         input.pressEnterToContinue();

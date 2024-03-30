@@ -9,6 +9,7 @@ import accounts.*;
 import certificateGenerator.BasicCertificate;
 import certificateGenerator.CertificatePrinter;
 import certificateGenerator.CustomCertificate;
+import com.opencsv.exceptions.CsvException;
 import services.Helper;
 import testPlatform.AdminPlatform;
 import testPlatform.UserPlatform;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, CsvException {
 
         boolean quit = false;
 
@@ -37,7 +38,7 @@ public class Main {
 
         // Hard Coded Login details to save time
         @SuppressWarnings("unused") TestAccounts testAccounts = new TestAccounts();
-        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
+        loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         while (!quit) {
@@ -49,7 +50,7 @@ public class Main {
                 switch (mmChoice) {
                     case 1:
                         myMenu.displayRegisterMenu();
-
+                        // todo plan feature comparison
                         int registerChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 0)));
 
                         switch (registerChoice) {
@@ -164,10 +165,21 @@ public class Main {
                                 CustomCertificate cCertificate = new CustomCertificate();
                                 System.out.println("Add your CSV to the root directory of the project");
                                 input.pressEnterToContinue();
-                                String filename = input.readString("Now enter the exact filename including extension e.g. file.csv");
-                                HashMap<String,String>[] certificateFile = FileHandling.csvToHashmap(filename);
-                                cCertificate.certificateDelivery(certificateFile);
 
+                                boolean fileValid = false;
+                                HashMap<String, String>[] certificateFile = null;
+                                do {
+                                    try {
+                                        String filename = input.readString("Enter the exact filename including extension (e.g., file.csv)");
+                                        certificateFile = FileHandling.csvToHashmap(filename);
+                                        fileValid = true; // If no exception is thrown, the filename is valid
+                                        System.out.println(" ");
+                                    } catch (Exception e) {
+                                        System.out.println("Error: Could not find or read file");
+                                    }
+                                } while (!fileValid);
+
+                                cCertificate.certificateDelivery(certificateFile);
                             }
 
                         }

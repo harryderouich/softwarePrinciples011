@@ -161,7 +161,7 @@ public class FileHandling {
         }
     }
 
-    public static HashMap<String, String>[] csvToHashmap(String path) {
+    public static HashMap<String, String>[] csvToHashmap(String path) throws IOException, CsvException {
         HashMap<String, String>[] certificates = null;
         try (CSVReader reader = new CSVReader(new FileReader(path))) {
             String[][] csvData = reader.readAll().toArray(new String[0][]);
@@ -175,8 +175,6 @@ public class FileHandling {
                 }
                 certificates[row - 1] = rowData;
             }
-        } catch (IOException | CsvException e) {
-            System.err.println("Error: Couldn't read CSV");
         }
         return certificates;
     }
@@ -220,5 +218,15 @@ public class FileHandling {
         rearrangedUserDetails.putAll(loggedInUser);
 
         return rearrangedUserDetails;
+    }
+
+    public static void writeSupportTicketToFile(String query, String email) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("support_tickets.txt", true))) {
+            bw.write("Email: " + email + "\n");
+            bw.write("Query: " + query + "\n");
+            bw.write("------------------\n\n");
+        } catch (IOException e) {
+            System.err.println("Error: Support ticket couldn't be written to file");
+        }
     }
 }

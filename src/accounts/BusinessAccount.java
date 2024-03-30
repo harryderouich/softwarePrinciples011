@@ -95,7 +95,8 @@ public class BusinessAccount extends Account {
         String yearExpiry = input.readCardYear();
         super.userDetails.put("cardYearExpiry", yearExpiry);
 
-        String cardCVC = input.readStringWithExactLength("Enter your card's CVC", 3);
+        // todo cvc gets error before entering any input
+        String cardCVC = input.readIntWithExactLength("Enter your card's CVC", 3, 4);
         super.userDetails.put("cardCVC", cardCVC);
     }
 }
