@@ -130,5 +130,38 @@
         ],
         "passmark": 1,
         "title": "1"
+    },
+    {
+        "questions": [
+            {
+                "question": "What is x + y",
+                "answers": [
+                    "a",
+                    "xy",
+                    "c"
+                ],
+                "correctAnswerIndex": 2
+            },
+            {
+                "question": "a",
+                "answers": [
+                    "a",
+                    "a",
+                    "a"
+                ],
+                "correctAnswerIndex": 1
+            },
+            {
+                "question": "1",
+                "answers": [
+                    "1",
+                    "1",
+                    "1"
+                ],
+                "correctAnswerIndex": 1
+            }
+        ],
+        "passmark": 50,
+        "title": "my quiz"
     }
 ]}

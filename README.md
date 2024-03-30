@@ -287,7 +287,32 @@ Please select a choice:
 Pressing `2` will prompt you for a short message, which is then appended to a text file containing the email addresses (automatically obtained from the logged-in user) and messages. 
 
 ### Quiz Platform
-TODO
+Our platform allows for administrators to create and assign quizzes that automatically issue a certificate upon completion. This feature is available to Business+ accounts only. 
+
+When logged in as a Business+ account and selecting `4` at the Main Menu, you are presented with the following screen:
+
+```
+Manage Quizzes & Login Keys
+1. Create a new quiz
+2. Generate login keys
+0. Return
+Choose an option: 
+```
+
+#### Creating a quiz
+Selecting `1` allows for a new quiz to be made. You are prompted for:
+
+- Quiz title
+- Then, for 3 questions:
+  - A string asking the question
+  - 3 possible answers
+  - The index of the correct answer 1-3
+- The percentage to pass 0-100 (enter 0 for any score to pass)
+
+The quiz is then saved and is ready to be assigned.
+
+#### Assigning a quiz and generating login keys
+Login keys allow for users to log in with just an alphanumeric string and be redirected to their assigned quiz. To create a login key, select `2` th
 
 # Skipped features
 * Scheduled delivery doesn't actually schedule
