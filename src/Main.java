@@ -50,8 +50,7 @@ public class Main {
                 switch (mmChoice) {
                     case 1:
                         myMenu.displayRegisterMenu();
-                        // todo plan feature comparison
-                        int registerChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 0)));
+                        int registerChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 4, 0)));
                         // todo after getting year expiry wrong and then right gets an error in the cvc
                         switch (registerChoice) {
                             case 1:
@@ -77,6 +76,24 @@ public class Main {
                                 loggedInAccount = bpAccount;
                                 System.out.println("Your account has been created and you are now logged in.");
                                 input.pressEnterToContinue();
+                                break;
+                            case 4:
+                                myMenu.displayPlanComparisonMenu();
+                                int planCompareChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 0)));
+                                switch (planCompareChoice) {
+                                    case 1:
+                                        myMenu.displayPersonalFeatures();
+                                        input.pressEnterToContinue();
+                                        break;
+                                    case 2:
+                                        myMenu.displayBusinessFeatures();
+                                        input.pressEnterToContinue();
+                                        break;
+                                    case 3:
+                                        myMenu.displayBusinessPlusFeatures();
+                                        input.pressEnterToContinue();
+                                        break;
+                                }
                                 break;
                         } // else (0) return
 

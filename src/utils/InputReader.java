@@ -204,18 +204,18 @@ public class InputReader {
         return value;
     }
 
-    public String readIntWithExactLength(String prompt, int lowerLengthBound, int upperLengthBound) {
-        boolean valid = false;
+    public String readIntWithLengthInRange(String prompt, int lowerLengthBound, int upperLengthBound) {
+        // todo has error immediately
         String inputString = null;
-        do {
-            try {
-                System.out.print(prompt + ": ");
-                inputString = inputObject.nextLine();
-                valid = verifyAllDigitsAndLengthInRange(inputString, lowerLengthBound, upperLengthBound);
-            } catch (Exception e) {
-                System.out.println("Error: Please enter a " + lowerLengthBound + "-" + upperLengthBound + "digit number");
+        boolean valid = false;
+        while (!valid) {
+            System.out.print(prompt + ": ");
+            inputString = inputObject.nextLine();
+            valid = verifyAllDigitsAndLengthInRange(inputString, lowerLengthBound, upperLengthBound);
+            if (!valid) {
+                System.out.println("Error: Please enter a " + lowerLengthBound + "-" + upperLengthBound + " digit number");
             }
-        } while (!valid);
+        }
         return inputString;
     }
 
@@ -295,20 +295,15 @@ public class InputReader {
     }
 
     // Verify an input is all digits and an exact length
-    public boolean verifyAllDigitsAndLengthInRange(String inputString, int lowerLengthBound, int upperLengthBound) throws Exception {
+    public boolean verifyAllDigitsAndLengthInRange(String inputString, int lowerLengthBound, int upperLengthBound) {
         // Check string contains integers only
-        char[] charArray = inputString.toCharArray();
-        for (char c : charArray) {
-            if (!(Character.isDigit(c))) {
-                throw new Exception("Error: Input contains non-digit characters");
-            }
+        if (!inputString.matches("\\d+")) {
+            return false;
         }
 
         // Check string is an exact length
-        if (!(inputString.length() >= lowerLengthBound && inputString.length() <= upperLengthBound)) {
-            throw new Exception("Error: Input is not " + lowerLengthBound + "-" + upperLengthBound + " digits");
-        }
-        return true;
+        int length = inputString.length();
+        return length >= lowerLengthBound && length <= upperLengthBound;
     }
 
     // todo incorporate exception e into error messages instead of hard coding

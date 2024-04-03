@@ -11,7 +11,6 @@ public class Menu {
         System.out.println("1. Register");
         System.out.println("2. Login");
         System.out.println("3. Help");
-        System.out.println("4. Compare plans");
         System.out.println("0. Exit");
     }
 
@@ -20,6 +19,7 @@ public class Menu {
         System.out.println("1. Personal Account (£0)");
         System.out.println("2. Business Account (£99+)");
         System.out.println("3. Business+ Account (£399+)");
+        System.out.println("4. Compare Plans");
         System.out.println("0. Return");
     }
 
@@ -103,7 +103,43 @@ public class Menu {
     }
 
     public void displayPersonalFeatures() {
-        System.out.println("Personal Account\nAlways £0 per month\nManual Certificate Generation\n"); // todo
+        System.out.println("""
+                Personal Account
+                Always £0 per month
+                Features:
+                - Manual certificate generation
+                - 1 certificate per 24 hours
+                - 3 certificates stored in the cloud
+                """);
+    }
+
+    public void displayBusinessFeatures() {
+        System.out.println("""
+                Business Account
+                Starting at £99 per month
+                - Batch certificate generation
+                - Unlimited certificates
+                - Automatic scheduled delivery
+                - Customise template design
+                - Add custom data fields
+                - Unlimited cloud storage
+                - Upload data in bulk
+                """);
+    }
+
+    public void displayBusinessPlusFeatures() {
+        System.out.println("""
+                Business+ Account
+                Starting at £399 per month
+                - Batch certificate generation
+                - Unlimited certificates
+                - Automatic scheduled delivery
+                - Customise template design
+                - Add custom data fields
+                - Unlimited cloud storage
+                - Upload data in bulk
+                - Create courses and quizzes
+                """);
     }
 
 }
