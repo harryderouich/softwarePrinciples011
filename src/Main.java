@@ -38,7 +38,7 @@ public class Main {
 
         // Hard Coded Login details to save time
         @SuppressWarnings("unused") TestAccounts testAccounts = new TestAccounts();
-        loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
+        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         while (!quit) {
@@ -52,7 +52,7 @@ public class Main {
                         myMenu.displayRegisterMenu();
                         // todo plan feature comparison
                         int registerChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 0)));
-
+                        // todo after getting year expiry wrong and then right gets an error in the cvc
                         switch (registerChoice) {
                             case 1:
                                 System.out.println("Register a Personal Account");

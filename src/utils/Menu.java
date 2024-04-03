@@ -11,6 +11,7 @@ public class Menu {
         System.out.println("1. Register");
         System.out.println("2. Login");
         System.out.println("3. Help");
+        System.out.println("4. Compare plans");
         System.out.println("0. Exit");
     }
 
@@ -93,5 +94,16 @@ public class Menu {
         System.out.println("0. Return");
     }
 
+    public void displayPlanComparisonMenu() {
+        System.out.println("Compare Plans:");
+        System.out.println("1. Personal Account");
+        System.out.println("2. Business Account");
+        System.out.println("3. Business+ Account");
+        System.out.println("0. Return");
+    }
+
+    public void displayPersonalFeatures() {
+        System.out.println("Personal Account\nAlways £0 per month\nManual Certificate Generation\n"); // todo
+    }
 
 }

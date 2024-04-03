@@ -49,7 +49,7 @@ public class FileHandling {
                     userDetails.getOrDefault("cardNumber", "") + "," +
                     userDetails.getOrDefault("cardMonthExpiry", "") + "," +
                     userDetails.getOrDefault("cardYearExpiry", "") + "," +
-                    userDetails.getOrDefault("cardCVC", "");
+                    userDetails.getOrDefault("cardCVC", "") + "\n";
             bWriter.write(rowToWrite); // Append the row to CSV
             // System.out.println("DEBUG: userDetails written to CSV file.");
         } catch (IOException e) {

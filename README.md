@@ -309,14 +309,24 @@ Selecting `1` allows for a new quiz to be made. You are prompted for:
   - The index of the correct answer 1-3
 - The percentage to pass 0-100 (enter 0 for any score to pass)
 
-The quiz is then saved and is ready to be assigned.
+The quiz is then saved (to `questions.json`)  and is ready to be assigned.
 
 #### Assigning a quiz and generating login keys
-Login keys allow for users to log in with just an alphanumeric string and be redirected to their assigned quiz. To create a login key, select `2` th
+Login keys allow for users to log in with just an alphanumeric string and be redirected to their assigned quiz. To create a login key, select `2` at the 'Manage Quizzes & Login Keys' menu. You will be presented with a list of the available quizzes (`questions.json`) and can select an option to continue. 
 
-# Skipped features
-* Scheduled delivery doesn't actually schedule
-* Fields can't be repositioned because it'd impractical for an application with no gui
-* User details stored in plain text 
-* File upload requires placing into project directory
-* Support tickets aren't actually sent anywhere
+You now enter the data that will prefill the user's certificate upon successful completion of the quiz. The business name is taken from the logged in Business+ account. The login key will be displayed on screen along with the selected quiz and participant name. 
+
+#### Taking a quiz
+To take a quiz using a generated login key, ensure you are logged out of any account as quizzes can only be taken as a guest. 
+
+At the main menu, select `2` to log in. Then, select `1` to enter a login key. Enter the 10 character login key and press enter. You will be authenticated and will begin the quiz. 
+
+At each question prompt, select an answer using the numbers 1-3 and press enter. After the 3 questions have been answered, you will be presented with a summary of your score. If you have met the minimum pass rate, your certificate will be displayed. 
+
+## Skipped Features
+* Scheduling certificates for future delivery doesn't actually do anything (beyond store them with a date and time as the filename) due to the application not being hosted anywhere. 
+* Certificates and login keys are not delivered to users via email connected to an email gateway.
+* The certificate builder lacks more complex customisation options (e.g. fields can't be repositioned) because it'd impractical and tedious for a console based application with no GUI.
+* Databases storing user details and passwords are stored alongside each other and in plain text. 
+* Uploading files (to create certificates in bulk) requires them to be placed into the project directory instead of via an upload button.
+* Support tickets are only stored as a text file and aren't actually sent anywhere.
