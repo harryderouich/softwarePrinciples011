@@ -168,22 +168,23 @@ public class InputReader {
 
     public String readCardYear() {
         boolean valid = false;
-        int year = 0;
+        int currentYear = Year.now().getValue();
+        int inputYear = 0;
         do {
             try {
                 System.out.print("Enter your card expiry year: ");
-                year = inputObject.nextInt();
-                if (String.valueOf(year).length() == 2) {
-                    year += 2000;
+                String input = inputObject.nextLine();
+                inputYear = Integer.parseInt(input.trim());
+                if (String.valueOf(inputYear).length() == 2) {
+                    inputYear += 2000;
                     // System.out.println("DEBUG: year " + year);
                 }
-                valid = yearIsInFuture(year);
+                valid = verifyIntMinValue(inputYear, currentYear);
             } catch (Exception e) {
                 System.out.println("Error: Year is invalid, please try again.");
-                inputObject.nextLine();
             }
         } while (!valid);
-        return String.valueOf(year);
+        return String.valueOf(inputYear);
     }
 
     public int readIntInRange(String prompt, int lowerBound, int upperBound) {
@@ -202,21 +203,6 @@ public class InputReader {
             }
         } while (!valid);
         return value;
-    }
-
-    public String readIntWithLengthInRange(String prompt, int lowerLengthBound, int upperLengthBound) {
-        // todo has error immediately
-        String inputString = null;
-        boolean valid = false;
-        while (!valid) {
-            System.out.print(prompt + ": ");
-            inputString = inputObject.nextLine();
-            valid = verifyAllDigitsAndLengthInRange(inputString, lowerLengthBound, upperLengthBound);
-            if (!valid) {
-                System.out.println("Error: Please enter a " + lowerLengthBound + "-" + upperLengthBound + " digit number");
-            }
-        }
-        return inputString;
     }
 
     // Verify an integer is in a range of values
@@ -276,15 +262,6 @@ public class InputReader {
         return true;
     }
 
-    // Verify a year is in the future
-    public boolean yearIsInFuture(int inputInt) throws Exception {
-        int currentYear = Year.now().getValue();
-        if (!(inputInt >= currentYear)) {
-            throw new Exception("Error: Year is not in the future");
-        }
-        return true;
-    }
-
     // Verify an integer is between a lower and upper boundary
     public boolean verifyIntInRange(int input, int lowerBound, int upperBound) throws Exception {
         if ( !(input >= lowerBound && input <= upperBound) ) {
@@ -294,16 +271,13 @@ public class InputReader {
         return true;
     }
 
-    // Verify an input is all digits and an exact length
-    public boolean verifyAllDigitsAndLengthInRange(String inputString, int lowerLengthBound, int upperLengthBound) {
-        // Check string contains integers only
-        if (!inputString.matches("\\d+")) {
-            return false;
+    // Verify an integer is at least a minimum value
+    public boolean verifyIntMinValue(int input, int minValue) throws Exception {
+        if ( !(input >= minValue) ) {
+            // Not in range
+            throw new Exception("Error: Input must be at least " + minValue);
         }
-
-        // Check string is an exact length
-        int length = inputString.length();
-        return length >= lowerLengthBound && length <= upperLengthBound;
+        return true;
     }
 
     // todo incorporate exception e into error messages instead of hard coding

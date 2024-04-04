@@ -1,5 +1,16 @@
 package testing;
 
+/*
+ * Save time logging in whilst testing using these test accounts
+ * Launch the program logged in by adding the following code to Main.java creating a testAccounts object:
+ *      TestAccounts testAccounts = new TestAccounts();
+ *
+ * Then to 'loggedInAccount' assign *one* of the following:
+ *      loggedInAccount = new Account(testAccounts.createPersonalAcc());
+ *      loggedInAccount = new Account(testAccounts.createBusinessAcc());
+ *      loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
+ */
+
 import java.util.HashMap;
 
 @SuppressWarnings("unused")

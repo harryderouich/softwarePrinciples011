@@ -105,15 +105,18 @@ public class BusinessAccount extends Account {
         String cardNumber = input.readCardNumber("Enter your long card number");
         super.userDetails.put("cardNumber", cardNumber);
 
+        // Set ArrayList of all valid months (1 and 2 digit) then capture a valid input of month of expiry
         ArrayList<String> validMonths = new ArrayList<>(Arrays.asList("01", "02", "03", "04", "04", "05", "06", "07", "08", "09", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8" , "9"));
         String monthExpiry = input.readValidString("Enter your card expiry month (number format)",validMonths);
         super.userDetails.put("cardMonthExpiry", monthExpiry);
 
+        // Capture a valid year of expiry that is the current year or in the future
         String yearExpiry = input.readCardYear();
         super.userDetails.put("cardYearExpiry", yearExpiry);
 
-        // todo cvc gets error before entering any input
-        String cardCVC = input.readIntWithLengthInRange("Enter your card's CVC", 3, 4);
-        super.userDetails.put("cardCVC", cardCVC);
+        // Capture a valid CVC of either 3 or 4 digits
+        int cardCVC = input.readIntInRange("Enter card CVC", 100, 9999);
+        super.userDetails.put("cardCVC", String.valueOf(cardCVC));
+
     }
 }
