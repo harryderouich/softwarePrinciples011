@@ -38,7 +38,7 @@ public class Main {
 
         // Hard Coded Login details to save time
         @SuppressWarnings("unused") TestAccounts testAccounts = new TestAccounts();
-        loggedInAccount = new Account(testAccounts.createBusinessAcc());
+        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         while (!quit) {

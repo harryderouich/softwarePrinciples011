@@ -330,3 +330,4 @@ At each question prompt, select an answer using the numbers 1-3 and press enter.
 * Databases storing user details and passwords are stored alongside each other and in plain text. 
 * Uploading files (to create certificates in bulk) requires them to be placed into the project directory instead of via an upload button.
 * Support tickets are only stored as a text file and aren't actually sent anywhere.
+* Quiz system supports only offers the ability to add 3 questions and 3 answers for each quiz.

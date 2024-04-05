@@ -12,87 +12,120 @@ import java.util.Arrays;
 
 public class UserPlatform {
 
-    public static final String QUESTIONS_JSON_FILENAME = "questions.json";
+    // Point to file containing questions for use in quizzes
+    public static final String questionsJson = "questions.json";
 
+    public static JSONArray getQuizzesJSONArray() throws IOException {
+        // Read the data from questionsJson and create a new JSONObject using it
+        JSONObject json = new JSONObject(readFromFile(questionsJson));
+        // Create a JSONArray using the data returned from the key 'quizzes'
+        return json.getJSONArray("quizzes");
+    }
+
+
+    // Display list of quizzes loaded from questions JSON
     public static void displayQuizzes() throws IOException {
-        JSONObject json = new JSONObject(readFromFile());
-        JSONArray allQuizzes = json.getJSONArray("quizzes");
+        // Retrieve a JSONArray containing all quizzes
+        JSONArray quizzes = getQuizzesJSONArray();
 
         System.out.println("\nAvailable Quizzes");
-        for (int i = 0; i < allQuizzes.length(); i++) {
-            JSONObject quiz = allQuizzes.getJSONObject(i);
-            System.out.println(i+1 + ". " + quiz.getString("title"));
+        // Loop over all the quizzes one at a time
+        for (int i = 0; i < quizzes.length(); i++) {
+            // Retrieve the quiz name for each index
+            System.out.println(i+1 + ". " + getQuizName(i+1));
         }
     }
 
+    // Retrieve a single quiz name by quiz index
     public static String getQuizName(int quizIndex) throws IOException {
-        JSONObject json = new JSONObject(readFromFile());
-        JSONArray allQuizzes = json.getJSONArray("quizzes");
-        JSONObject quiz = allQuizzes.getJSONObject(quizIndex-1);
+        // Retrieve a JSONArray containing all quizzes
+        JSONArray quizzes = getQuizzesJSONArray();
+
+        // For the selected quiz index (-1 to get back to index 0 numbering) create a JSONObject
+        JSONObject quiz = quizzes.getJSONObject(quizIndex-1);
         return quiz.getString("title");
     }
 
+    // Run the quiz for the user using a chosen quiz index
     public static boolean runQuiz(int chosenQuiz) throws IOException {
         InputReader input = new InputReader();
-        JSONObject json = new JSONObject(readFromFile());
 
-        JSONArray quizzes = json.getJSONArray("quizzes");
+        // Retrieve a JSONArray containing all quizzes
+        JSONArray quizzes = getQuizzesJSONArray();
+
+        // Retrieve the chosen quiz
         JSONObject quiz = quizzes.getJSONObject(chosenQuiz - 1);
 
+        // Retrieve the data for the quiz - title, questions and passmark
+        String title = quiz.getString("title");
         JSONArray questions = quiz.getJSONArray("questions");
         int passMark = quiz.getInt("passmark");
-        String title = quiz.getString("title");
 
+        // Counter to store number of correct answers
         int marks = 0;
 
         System.out.println(title);
 
+        // Loop over the list of questions
         for (int i = 0; i < questions.length(); i++) {
+            // Create a JSONObject for the selected question
             JSONObject questionObject = questions.getJSONObject(i);
-            String question = questionObject.getString("question");
+            // Retrieve and store the string asking the question
+            String questionString = questionObject.getString("question");
+            // Retrieve an array of the answers to the selected question
             JSONArray answersArray = questionObject.getJSONArray("answers");
-            System.out.println("Question " + (i + 1) + ": " + question);
+            // Output the question string
+            System.out.println("Question " + (i+1) + ": " + questionString);
 
+            // Loop over and display the available answers with an index
             for (int j = 0; j < answersArray.length(); j++) {
-                System.out.println((j + 1) + ". " + answersArray.getString(j));
+                System.out.println((j+1) + ". " + answersArray.getString(j));
             }
 
+            // Prompt the user to select an answer
+            // todo make array of valid numbers dynamically calculated from answersArray.length
             int userAnswerIndex = input.readValidInt("Select an answer", new ArrayList<>(Arrays.asList(1, 2, 3)));
 
+            // Determine if the answer is correct
             if (userAnswerIndex - 1 == questionObject.getInt("correctAnswerIndex")) {
                 System.out.println("Correct!");
+                // Increment marks by 1
                 marks += 1;
             } else {
                 System.out.println("Incorrect.");
             }
         }
 
+        // Calculate the percentage score
         int numQuestions = questions.length();
         double percentageScored = (double) marks / numQuestions * 100;
         System.out.println("Total: " + marks + "/" + numQuestions);
         // todo round percentage to 0 or 1 decimal places
         System.out.println(percentageScored + "%");
 
+        // Evaluate if the percentage score is equal to or above the pass mark for the quiz
         if (percentageScored >= passMark) {
             System.out.println("You have passed!");
             return true;
         }
-
+        // Else
         System.out.println("Sorry, you have not passed.");
         return false;
     }
 
-
-    public static String readFromFile() throws IOException {
-        return new String(Files.readAllBytes(Paths.get(UserPlatform.QUESTIONS_JSON_FILENAME)));
+    // Read data from a filename and return it as a string
+    public static String readFromFile(String filename) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(filename)));
     }
 
+    // Calculate number of quizzes currently stored in questionsJson
     public static int getNumberOfQuizzes() throws IOException {
-        JSONObject json = new JSONObject(readFromFile());
+        JSONObject json = new JSONObject(readFromFile(questionsJson));
         JSONArray allQuizzes = json.getJSONArray("quizzes");
         return allQuizzes.length();
     }
 
+    // Todo use this where calculated arraylist needed
     public static ArrayList<Integer> generateQuizIntList(int numberOfQuizzes) {
         ArrayList<Integer> quizIntList = new ArrayList<>();
         for (int i = 1; i <= numberOfQuizzes; i++) {

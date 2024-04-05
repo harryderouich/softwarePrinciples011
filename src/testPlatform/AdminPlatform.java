@@ -15,8 +15,6 @@ import java.util.UUID;
 
 public class AdminPlatform {
 
-    private static final String filename = "questions.json";
-
     static final ArrayList<String> loginKeyFields = new ArrayList<>(Arrays.asList("Participant Name", "Instructor Name"));
 
 
@@ -54,7 +52,7 @@ public class AdminPlatform {
 
         // Todo remove check?
         JSONObject jsonObject;
-        String fileContent = UserPlatform.readFromFile();
+        String fileContent = UserPlatform.readFromFile(UserPlatform.questionsJson);
         if (fileContent.isEmpty()) { // Check if JSON file exists/is empty
             jsonObject = new JSONObject(); // Create a new empty JSONObject
             jsonObject.put("quizzes", new JSONArray()); // Create a new JSONArray with key "quizzes"
@@ -69,7 +67,7 @@ public class AdminPlatform {
         quizzesArray.put(newQuizObject);
 
         // Write the combined quiz array back to the file
-        try (FileWriter fileWriter = new FileWriter(filename)) {
+        try (FileWriter fileWriter = new FileWriter(UserPlatform.questionsJson)) {
             fileWriter.write(jsonObject.toString(4));
         }
 
