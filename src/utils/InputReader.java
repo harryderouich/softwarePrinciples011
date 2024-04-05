@@ -41,9 +41,9 @@ public class InputReader {
                 valid = verifyIntChoiceInRange(value, validValues);
                 System.out.println(" ");
             } catch (NumberFormatException e) {
-                System.out.println("Sorry, please enter a valid integer");
-            } catch (InputMismatchException e) {
-                System.out.println("Sorry, please enter one of the valid choices: " + validValues);
+                System.out.println("Error: Please enter a valid integer");
+            } catch (Exception e) {
+                System.out.println("Error: Please enter one of the valid choices: " + validValues);
             }
         } while (!valid);
         return value;
@@ -58,8 +58,8 @@ public class InputReader {
                 System.out.print(prompt + ": ");
                 value = inputObject.nextLine();
                 valid = verifyStringChoiceInRange(value, validValues);
-            } catch (InputMismatchException e) {
-                System.out.println("Sorry, please enter one of the valid choices: " + validValues);
+            } catch (Exception e) {
+                System.out.println("Error: Please enter one of the valid choices: " + validValues);
             }
         } while (!valid);
         return value;
@@ -124,9 +124,9 @@ public class InputReader {
                 value = Integer.parseInt(input);
                 valid = verifyIntPositive(value);
             } catch (NumberFormatException e) {
-                System.out.println("Sorry, please enter a valid integer");
+                System.out.println("Error: Please enter a valid integer");
             } catch (Exception e) {
-                System.out.println("Sorry, please enter a positive value");
+                System.out.println("Error: Please enter a positive value");
             }
         } while (!valid);
         return value;
@@ -206,17 +206,17 @@ public class InputReader {
     }
 
     // Verify an integer is in a range of values
-    public boolean verifyIntChoiceInRange(int choice, ArrayList<Integer> validValues) {
+    public boolean verifyIntChoiceInRange(int choice, ArrayList<Integer> validValues) throws Exception {
         if (!validValues.contains(choice)) {
-            throw new InputMismatchException("Choice not found in list of valid values");
+            throw new Exception("Choice '" + choice + "' not found in list of valid values '" + validValues + "'");
         }
         return true;
     }
 
     // Verify a String is in a range of values
-    public boolean verifyStringChoiceInRange(String choice, ArrayList<String> validValues) {
+    public boolean verifyStringChoiceInRange(String choice, ArrayList<String> validValues) throws Exception {
         if (!validValues.contains(choice)) {
-            throw new InputMismatchException("Choice not found in list of valid values");
+            throw new Exception("Choice '" + choice + "' not found in list of valid values '" + validValues + "'");
         }
         return true;
     }
@@ -224,7 +224,7 @@ public class InputReader {
     // Verify a string is at least a minimum length
     public boolean verifyMinStringLength(String inputString, int minLength) throws Exception {
         if (inputString.length() < minLength) {
-            throw new Exception("Error: Must be at least " + minLength + " characters. Please try again");
+            throw new Exception("Input is " + inputString.length() + "characters, must be at least " + minLength + " characters.");
         }
         return true;
     }
@@ -232,7 +232,7 @@ public class InputReader {
     // Verify a string is an exact length
     public boolean verifyExactStringLength(String inputString, int exactLength) throws Exception {
         if (inputString.length() != exactLength) {
-            throw new Exception("Error: Must be exactly " + exactLength + " characters. Please try again");
+            throw new Exception("Input is " + inputString.length() + "characters, must be exactly " + exactLength + " characters.");
         }
         return true;
     }
@@ -240,7 +240,7 @@ public class InputReader {
     // Verify a string follows a given email format (regular expression)
     public boolean verifyEmailFormat(String inputString) throws Exception {
         if (!inputString.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}\\.?[A-Za-z?]*\\b")) {
-            throw new Exception("Error: Invalid email format");
+            throw new Exception("Invalid email format");
         }
         return true;
     }
@@ -249,14 +249,14 @@ public class InputReader {
     public boolean verifyCardNumber(String inputString) throws Exception {
         String sanitisedCardNumberString = inputString.replaceAll("\\D","");
         if (!(sanitisedCardNumberString.length() == 16)) {
-            throw new Exception("Error: Invalid card number (length not 16)");
+            throw new Exception("Invalid card number (length is " + sanitisedCardNumberString.length() + " not 16)");
         }
 
         // Check string contains integers only
         char[] charArray = sanitisedCardNumberString.toCharArray();
         for (char c : charArray) {
             if (!(Character.isDigit(c))) {
-                throw new Exception("Error: Invalid card number (contains non-digit characters)");
+                throw new Exception("Invalid card number (contains non-digit characters)");
             }
         }
         return true;
@@ -266,7 +266,7 @@ public class InputReader {
     public boolean verifyIntInRange(int input, int lowerBound, int upperBound) throws Exception {
         if ( !(input >= lowerBound && input <= upperBound) ) {
             // Not in range
-            throw new Exception("Error: Input is not between " + lowerBound + "-" + upperBound);
+            throw new Exception("Input '" + input + "' is not between " + lowerBound + "-" + upperBound);
         }
         return true;
     }
@@ -275,11 +275,9 @@ public class InputReader {
     public boolean verifyIntMinValue(int input, int minValue) throws Exception {
         if ( !(input >= minValue) ) {
             // Not in range
-            throw new Exception("Error: Input must be at least " + minValue);
+            throw new Exception("Input '" + input + "' must be at least " + minValue);
         }
         return true;
     }
-
-    // todo incorporate exception e into error messages instead of hard coding
 
 }
