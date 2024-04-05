@@ -170,26 +170,40 @@ public class FileHandling {
         }
     }
 
-    // todo comments from here
     // Read a CSV and create a list of HashMaps to contain data of multiple certificates
     public static HashMap<String, String>[] csvToHashmap(String path) throws IOException, CsvException {
-        HashMap<String, String>[] certificates; // todo check removing = null doesn't break anything
+        // Empty HashMap to store retrieved certificates in
+        HashMap<String, String>[] certificates;
+
         try (CSVReader reader = new CSVReader(new FileReader(path))) {
+            // Read all data from the CSV into a 2D Array
             String[][] csvData = reader.readAll().toArray(new String[0][]);
+
+            // Retrieve the header row and store as a string
             String[] headers = csvData[0];
+
+            // Create a HashMap array sized 1 fewer than the amount of rows (as header row is excluded)
             certificates = new HashMap[csvData.length - 1];
 
-            for (int row = 1; row < csvData.length; row++) {
+            // Beginning from row 1 (excluding headers)
+            for (int i = 1; i < csvData.length; i++) {
+                // Empty HashMap to store the current certificate
                 HashMap<String, String> rowData = new HashMap<>();
-                for (int col = 0; col < headers.length; col++) {
-                    rowData.put(headers[col], csvData[row][col]);
+
+                // Loop over all columns of the currently selected row
+                for (int j = 0; j < headers.length; j++) {
+                    // Add the selected cell to the HashMap with header as the key
+                    rowData.put(headers[j], csvData[i][j]);
                 }
-                certificates[row - 1] = rowData;
+                // Store the finished certificate HashMap in the array
+                certificates[i - 1] = rowData;
             }
         }
         return certificates;
     }
-    
+
+    // Authenticate a provided login key
+    // todo comments this function only
     public static HashMap<String, String> authenticateLoginKey(String loginKey) {
         try (FileReader fReader = new FileReader(loginKeyPath);
              BufferedReader bReader = new BufferedReader(fReader)) {
@@ -216,25 +230,33 @@ public class FileHandling {
         return null;
     }
 
+    // Revert userDetails to original order
     public static HashMap<String, String> reorderUserDetails(HashMap<String, String> loggedInUser) {
-        // Reorder accountDetails
+        // Original order of keys
         String[] loginKeyAllKeys = {"loginKey", "quizIndex", "Business Name", "Participant Name", "Course Name", "Date", "Instructor Name"};
 
+        // New HashMap to take the reordered items
         HashMap<String, String> rearrangedUserDetails = new LinkedHashMap<>();
+
+        // Loop using order of keys
         for (String key : loginKeyAllKeys) {
+            // Check if the loggedInUser contains the specified key
             if (loggedInUser.containsKey(key)) {
+                // Place the key and value into the new HashMap
                 rearrangedUserDetails.put(key, loggedInUser.get(key));
             }
         }
-        rearrangedUserDetails.putAll(loggedInUser);
-
         return rearrangedUserDetails;
     }
 
+    // Append submitted support tickets to an existing text file
     public static void writeSupportTicketToFile(String query, String email) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("support_tickets.txt", true))) {
+            // Write email to file
             bw.write("Email: " + email + "\n");
+            // Write query to file
             bw.write("Query: " + query + "\n");
+            // Separator
             bw.write("------------------\n\n");
         } catch (IOException e) {
             System.err.println("Error: Support ticket couldn't be written to file");
