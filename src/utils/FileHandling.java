@@ -17,12 +17,10 @@ import com.opencsv.exceptions.CsvException;
 public class FileHandling {
 
     // TODO Add check for already used email
-
     public static final String userAccountPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\user_accounts.csv";
     public static final ArrayList<String> userAccountCsvHeader = new ArrayList<>(Arrays.asList("email","password","accountType","businessName", "monthlyQuota","monthlyPrice","paymentOption","cardNumber","yearExpiry","monthExpiry","cardCVC"));
     public static final String loginKeyPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\login_keys.csv";
     public static final ArrayList<String> loginKeyCsvHeader = new ArrayList<>(Arrays.asList("loginKey","quizIndex","Business Name","Participant Name","Course Name","Instructor Name"));
-
 
     // Empty constructor
     private FileHandling() {
@@ -33,12 +31,13 @@ public class FileHandling {
         boolean fileIsEmpty = isFileEmpty(userAccountPath);
         try (FileWriter fWriter = new FileWriter(userAccountPath, true);
              BufferedWriter bWriter = new BufferedWriter(fWriter)) {
+            // Check if file is empty
             if (fileIsEmpty) {
                 // Write CSV headings if file is empty
                 bWriter.write("email,password,accountType,businessName,monthlyQuota,monthlyPrice,paymentOption," +
                         "cardNumber,cardMonthExpiry,cardYearExpiry,cardCVC\n");
             }
-            // Construct userDetails row
+            // Construct String of userDetails to write to file as row
             String rowToWrite = userDetails.getOrDefault("email", "") + "," +
                     userDetails.getOrDefault("password", "") + "," +
                     userDetails.getOrDefault("accountType", "") + "," +
@@ -66,7 +65,7 @@ public class FileHandling {
                 // Write CSV headings if file is empty
                 bWriter.write("loginKey,quizIndex,Business Name,Participant Name,Course Name,Instructor Name\n");
             }
-            // Construct userDetails row
+            // Construct String of loginKeyDetails to write to file as row
             String rowToWrite = loginKeyDetails.getOrDefault("loginKey", "") + "," +
                     loginKeyDetails.getOrDefault("quizIndex", "") + "," +
                     loginKeyDetails.getOrDefault("Business Name", "") + "," +
@@ -80,7 +79,7 @@ public class FileHandling {
         }
     }
 
-
+    // Attempt to log in using a provided email and password
     public static HashMap<String, String> authenticateUser(String email, String password) {
         try (FileReader fReader = new FileReader(userAccountPath);
              BufferedReader bReader = new BufferedReader(fReader)) {
@@ -91,12 +90,13 @@ public class FileHandling {
                     headerSkipped = true;
                     continue; // Skip the CSV header row so user cannot log in with "email" and "password"
                 }
-                String[] rowToList = line.split(","); // Create a list with each element of the user's row
-                if (rowToList.length >= 2 && rowToList[0].equals(email) && rowToList[1].equals(password)) {
+                // Create a list with each element of the user's row
+                String[] rowToList = line.split(",");
+                // Check if the 1st and 2nd elements in the current row/list being checked equal the email and password entered by the user
+                if (rowToList.length >= 2 && rowToList[0].equals(email) && rowToList[1].equals(password)) { // User is authenticated
                     // System.out.println("DEBUG: User successfully authenticated.");
-
                     // Once authenticated, extract account details from the user's row list
-                    return getHashMapFromRow(rowToList, userAccountCsvHeader); // Return/finish the loop/s and return HashMap with user's details
+                    return getHashMapFromRow(rowToList, userAccountCsvHeader); // Return & finish the loop/s and return HashMap with user's details
                 }
             }
             // System.out.println("DEBUG: Auth failed, incorrect email/password.");
@@ -107,6 +107,7 @@ public class FileHandling {
         }
     }
 
+    // Take a list and place it in a HashMap with another list as the corresponding key
     private static HashMap<String, String> getHashMapFromRow(String[] rowToList, ArrayList<String> userAccountCsvHeader) {
         HashMap<String, String> accountDetails = new HashMap<>(); // To store the details
         // Iterate over each element in the row and repopulate the HashMap
@@ -117,8 +118,9 @@ public class FileHandling {
         return accountDetails;
     }
 
+    // Authenticate an account and then recreate an Account object
     public static Account authenticateAndRecreateAccount(String email, String password) {
-        // Authenticate the user using Username and Password, then take the returned AccountDetails
+        // Authenticate the user using Username and Password, then take the returned accountDetails
         HashMap<String, String> accountDetails = authenticateUser(email, password);
 
         // Recreate the account using HashMap populated from CSV file row
@@ -130,6 +132,7 @@ public class FileHandling {
         return null;
     }
 
+    // Break down an accountDetails HashMap and recreate the correct type of account
     private static Account recreateAccount(HashMap<String, String> accountDetails) {
         // Determine the account type using the accountType value and recreate either personal or business account
         switch (accountDetails.get("accountType")) {
@@ -144,25 +147,33 @@ public class FileHandling {
         return null;
     }
 
+    // Return a true/false if a file is empty
     private static boolean isFileEmpty(String filePath) {
         File file = new File(filePath);
         return !file.exists() || file.length() == 0;
     }
 
+    // Write certificates outputted to console to a file instead
     public static void writeCertsToFile(HashMap<String, String>[] certificates, String filename) {
+        // Store the current PrintStream to revert to later
         PrintStream console = System.out;
         try (PrintStream out = new PrintStream(new BufferedOutputStream(new FileOutputStream(filename + ".txt")))) {
+            // Set the output to the FileOutputStream
             System.setOut(out);
+            // Output the certificates to the FileOutputStream
             CertificatePrinter.printCertificates(certificates);
         } catch (Exception e) {
             System.err.println("Error: Certificates couldn't be written to file");
         } finally {
+            // Once finished, revert the output back to console
             System.setOut(console);
         }
     }
 
+    // todo comments from here
+    // Read a CSV and create a list of HashMaps to contain data of multiple certificates
     public static HashMap<String, String>[] csvToHashmap(String path) throws IOException, CsvException {
-        HashMap<String, String>[] certificates = null;
+        HashMap<String, String>[] certificates; // todo check removing = null doesn't break anything
         try (CSVReader reader = new CSVReader(new FileReader(path))) {
             String[][] csvData = reader.readAll().toArray(new String[0][]);
             String[] headers = csvData[0];

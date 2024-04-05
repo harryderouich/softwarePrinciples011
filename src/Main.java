@@ -218,7 +218,7 @@ public class Main {
                                 AdminPlatform.createNewQuiz();
                                 break;
                             case 2: // Generate Login Keys
-                                AdminPlatform.generateLoginKeys(loggedInAccount);
+                                AdminPlatform.generateLoginKey(loggedInAccount);
                                 input.pressEnterToContinue();
                         }
 

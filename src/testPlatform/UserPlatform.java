@@ -83,8 +83,7 @@ public class UserPlatform {
             }
 
             // Prompt the user to select an answer
-            // todo make array of valid numbers dynamically calculated from answersArray.length
-            int userAnswerIndex = input.readValidInt("Select an answer", new ArrayList<>(Arrays.asList(1, 2, 3)));
+            int userAnswerIndex = input.readValidInt("Select an answer", generateArrayListSequence(1, answersArray.length()));
 
             // Determine if the answer is correct
             if (userAnswerIndex - 1 == questionObject.getInt("correctAnswerIndex")) {
@@ -120,17 +119,23 @@ public class UserPlatform {
 
     // Calculate number of quizzes currently stored in questionsJson
     public static int getNumberOfQuizzes() throws IOException {
+        // Retrieve questionsJson as a JSONObject
         JSONObject json = new JSONObject(readFromFile(questionsJson));
+        // Load all quizzes
         JSONArray allQuizzes = json.getJSONArray("quizzes");
+        // Return the length (# of quizzes)
         return allQuizzes.length();
     }
 
-    // Todo use this where calculated arraylist needed
-    public static ArrayList<Integer> generateQuizIntList(int numberOfQuizzes) {
-        ArrayList<Integer> quizIntList = new ArrayList<>();
-        for (int i = 1; i <= numberOfQuizzes; i++) {
-            quizIntList.add(i);
+    // Generate an ArrayList of integers from a starting number to an upper limit
+    public static ArrayList<Integer> generateArrayListSequence(int start, int upperLimit) {
+        // Empty ArrayList to store the integers
+        ArrayList<Integer> sequenceArrayList = new ArrayList<>();
+        // For start-upperLimit..
+        for (int i = start; i <= upperLimit; i++) {
+            // Add the integer to the ArrayList
+            sequenceArrayList.add(i);
         }
-        return quizIntList;
+        return sequenceArrayList;
     }
 }
