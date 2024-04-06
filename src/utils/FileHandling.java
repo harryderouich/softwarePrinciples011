@@ -202,24 +202,33 @@ public class FileHandling {
         return certificates;
     }
 
-    // Authenticate a provided login key
-    // todo comments this function only
+    // Take a login key and authenticate against a user stored in login_keys.csv
     public static HashMap<String, String> authenticateLoginKey(String loginKey) {
         try (FileReader fReader = new FileReader(loginKeyPath);
              BufferedReader bReader = new BufferedReader(fReader)) {
+            // Store each line that's read from the file
             String line;
+            // To track whether the header row has been skipped, initially false
             boolean headerSkipped = false;
+            // Continue until end of file
             while ((line = bReader.readLine()) != null) {
+                // Skip the CSV header row so user cannot log in with "loginKey"
+                // If the header hasn't yet been skipped
                 if (!headerSkipped) {
+                    // It will now have been skipped so can continue
                     headerSkipped = true;
-                    continue; // Skip the CSV header row so user cannot log in with "loginKey"
+                    continue;
                 }
-                String[] rowToList = line.split(","); // Create a list with each element of the login key row
-                if (rowToList.length == 6 && rowToList[0].equals(loginKey)) {
+                // Create a list with each element of the login key row
+                String[] rowToList = line.split(",");
+                // Checking the first item in the row array to see if it matches the provided login key
+                if (rowToList[0].equals(loginKey)) {
                     // System.out.println("DEBUG: User successfully authenticated.");
 
                     // Once authenticated, extract account details from the user's row list
-                    return getHashMapFromRow(rowToList, loginKeyCsvHeader); // Return/finish the loop/s and return HashMap with user's details
+                    // Return/finish the loop/s and return HashMap with user's details
+                    return getHashMapFromRow(rowToList, loginKeyCsvHeader);
+
                 }
             }
             System.out.println("Error: Login key not found");
@@ -227,7 +236,7 @@ public class FileHandling {
             // System.out.println("DEBUG: Error when reading userDetails from CSV file: " + e.getMessage());
             return null; // Don't log them in
         }
-        return null;
+        return null; // Don't log them in
     }
 
     // Revert userDetails to original order

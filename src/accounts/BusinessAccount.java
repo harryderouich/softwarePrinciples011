@@ -101,9 +101,9 @@ public class BusinessAccount extends Account {
 
         System.out.println("Amount Due: £" + amountDueString);
 
-        // Capture card number, expiry and CVC
+        // Capture card number, with white spaces removed
         String cardNumber = input.readCardNumber("Enter your long card number");
-        super.userDetails.put("cardNumber", cardNumber);
+        super.userDetails.put("cardNumber", cardNumber.replaceAll("\\D",""));
 
         // Set ArrayList of all valid months (1 and 2 digit) then capture a valid input of month of expiry
         ArrayList<String> validMonths = new ArrayList<>(Arrays.asList("01", "02", "03", "04", "04", "05", "06", "07", "08", "09", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8" , "9"));
@@ -118,5 +118,6 @@ public class BusinessAccount extends Account {
         int cardCVC = input.readIntInRange("Enter card CVC", 100, 9999);
         super.userDetails.put("cardCVC", String.valueOf(cardCVC));
 
+        System.out.println(" ");
     }
 }

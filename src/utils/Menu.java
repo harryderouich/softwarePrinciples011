@@ -42,6 +42,7 @@ public class Menu {
         System.out.println("1. Certificate Creation");
         System.out.println("2. Log Out");
         System.out.println("3. Help");
+        // If account is businessPlus, show additional option 4
         if (Objects.equals(loggedInAccount.userDetails.get("accountType"), "businessPlus")) {
             System.out.println("4. Configure Quizzes");
         }

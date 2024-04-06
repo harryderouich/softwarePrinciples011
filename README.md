@@ -72,6 +72,7 @@ Register:
 1. Personal Account (£0)
 2. Business Account (£99+)
 3. Business+ Account (£399+)
+4. Compare Plans
 0. Return
 Please enter a choice: 
 ```
@@ -99,6 +100,22 @@ Depending on the account type selected, users are requested to input the followi
 - Card CVC. Validated against being 3-4 digits in length.
 
 Upon successful creation of an account, the entered details are written to a `user_accounts` database, and you will be automatically logged in and can press enter to continue. 
+
+#### Compare Plans
+Selecting `4` at the Register menu allows you to compare the features of the 3 plans on offer. Selecting `1`-`3` and pressing enter will show the features. For example, when pressing `2` you will see the features of the Business account:
+```
+Business Account
+Starting at £99 per month
+- Batch certificate generation
+- Unlimited certificates
+- Automatic scheduled delivery
+- Customise template design
+- Add custom data fields
+- Unlimited cloud storage
+- Upload data in bulk
+
+Press Enter key to continue...
+```
 
 ### Log In
 From the main menu, pressing `2` lets you log in with an account already stored in the `user_accounts` database (including any of the test credentials).
