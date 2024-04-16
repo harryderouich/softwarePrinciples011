@@ -26,6 +26,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
+// todo check that written certificate file writes while program is running
+// todo check what happens with partially empty csv for certificate creation
+
 public class Main {
     public static void main(String[] args) throws IOException, CsvException {
         // Boolean value to allow the entire system to run until the user chooses to quit
@@ -39,7 +42,7 @@ public class Main {
 
         // Hard Coded Login details to save time
         @SuppressWarnings("unused") TestAccounts testAccounts = new TestAccounts();
-        loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
+        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
         // End
 
         // Main program looping until user chooses to quit
@@ -186,7 +189,6 @@ public class Main {
                             int certMenuChoice = input.readValidInt("Please enter a choice", new ArrayList<>(Arrays.asList(1, 2, 3, 0)));
 
                             if (certMenuChoice == 1) { // Create single certificate
-                                // todo implement daily limit/check
                                 BasicCertificate bCertificate = new BasicCertificate();
                                 bCertificate.generateSingleCert();
                             }

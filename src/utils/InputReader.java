@@ -106,7 +106,7 @@ public class InputReader {
             try {
                 System.out.print(prompt + ": ");
                 inputString = inputObject.nextLine(); // Capture input from the user
-                valid = verifyEmailFormat(inputString); // Verify if input is valid
+                valid = verifyEmailFormat(inputString) && FileHandling.verifyEmailNotUsed(inputString); // Verify if input is valid
             } catch (Exception e) {
                 System.out.println("Error: Invalid email address");
             }

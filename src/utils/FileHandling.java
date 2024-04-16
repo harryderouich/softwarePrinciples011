@@ -13,13 +13,13 @@ import java.util.LinkedHashMap;
 import certificateGenerator.CertificatePrinter;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import com.opencsv.exceptions.CsvValidationException;
 
 public class FileHandling {
 
-    // TODO Add check for already used email
-    public static final String userAccountPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\user_accounts.csv";
+    public static final String userAccountPath = "user_accounts.csv";
     public static final ArrayList<String> userAccountCsvHeader = new ArrayList<>(Arrays.asList("email","password","accountType","businessName", "monthlyQuota","monthlyPrice","paymentOption","cardNumber","yearExpiry","monthExpiry","cardCVC"));
-    public static final String loginKeyPath = "C:\\Users\\harry\\IdeaProjects\\softwarePrinciples011\\login_keys.csv";
+    public static final String loginKeyPath = "login_keys.csv";
     public static final ArrayList<String> loginKeyCsvHeader = new ArrayList<>(Arrays.asList("loginKey","quizIndex","Business Name","Participant Name","Course Name","Instructor Name"));
 
     // Empty constructor
@@ -270,5 +270,23 @@ public class FileHandling {
         } catch (IOException e) {
             System.err.println("Error: Support ticket couldn't be written to file");
         }
+    }
+
+    public static boolean verifyEmailNotUsed(String inputString) throws CsvValidationException, IOException {
+        try (CSVReader reader = new CSVReader(new FileReader(userAccountPath))) {
+            // Empty string to store each row
+            String[] row;
+            // Until end of the file is reached, read the csv row and store it in a string array
+            while ((row = reader.readNext()) != null) {
+                // If the row is at least 1 character and the first element in the string array (the email) matches the inputted email
+                if (row.length > 0 && row[0].equals(inputString)) {
+                    // Email already exists in the CSV
+                    System.out.println("Error: Email has already been used");
+                    return false;
+                }
+            }
+        }
+        // Otherwise, email doesn't exist in the CSV
+        return true;
     }
 }
