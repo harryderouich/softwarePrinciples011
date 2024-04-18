@@ -7,8 +7,8 @@ import utils.InputReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class UserPlatform {
 
@@ -99,8 +99,11 @@ public class UserPlatform {
         int numQuestions = questions.length();
         double percentageScored = (double) marks / numQuestions * 100;
         System.out.println("Total: " + marks + "/" + numQuestions);
-        // todo round percentage to 0 or 1 decimal places
-        System.out.println(percentageScored + "%");
+        // Format the percentage to 2 decimal places using a created DecimalFormat object
+        DecimalFormat twoDecimalPlaces = new DecimalFormat("##.00");
+        String percentageScoredString = twoDecimalPlaces.format(percentageScored);
+
+        System.out.println(percentageScoredString + "%");
 
         // Evaluate if the percentage score is equal to or above the pass mark for the quiz
         if (percentageScored >= passMark) {

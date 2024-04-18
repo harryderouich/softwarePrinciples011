@@ -1,13 +1,11 @@
-# # # # # # # # # # # # # # # # # # 
- Certificate Generator Application 
-# # # # # # # # # # # # # # # # # # 
-
-* Module: 2023 MOD003484 TRI2 F01CAM
-* Assignment: 011 Element Design and implementation report
-* Author: Harry Derouich (SID 2304874)
-* Team: Skystone
-
-- - - - - - - - - - - - - - - - - -
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+|               Certificate Generator Application               |
+|                  Module: Software Principles                  |
+|            Module Code: 2023 MOD003484 TRI2 F01CAM            |
+|    Assignment: 011 Element Design and implementation report   |
+|              Author: Harry Derouich (SID 2304874)             |
+|                         Team: Skystone                        |
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 Overview:
 Skystone is a Java-based certificate generation application that facilitates the scalable creation of certificates. In addition, administrators can create and manage quizzes that provide automatic issuance of certificates upon an assigned user passing.
@@ -38,6 +36,8 @@ Features:
 Test Credentials:
 To test the application, you are free to register your own account/s, or use the provided test credentials below:
 
+    Email & Password Logins:
+
     Account Type: Personal
     Email: test@personal.com
     Password: password1
@@ -49,6 +49,11 @@ To test the application, you are free to register your own account/s, or use the
     Account Type: Business+
     Email: test@businessplus.co.uk
     Password: password3
+
+    Login Keys:
+
+    Key: e092462cf9
+    Quiz: Geography Quiz
 
 - - - - - - - - - - - - - - - - - -
 

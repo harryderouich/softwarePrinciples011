@@ -32,6 +32,8 @@ Skystone is a Java-based certificate generation application that facilitates the
 ## Test Credentials
 To test the application, you are free to register your own account/s, or use the provided test credentials below:
 ```
+Email & Password Logins:
+
 Account Type: Personal
 Email: test@personal.com
 Password: password1
@@ -43,6 +45,11 @@ Password: password2
 Account Type: Business+
 Email: test@businessplus.co.uk
 Password: password3
+
+Login Keys:
+    
+Key: e092462cf9
+Quiz: Geography Quiz
 ```
 
 ## Usage

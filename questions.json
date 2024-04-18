@@ -13,11 +13,11 @@
             {
                 "question": "Which river flows through London?",
                 "answers": [
-                    "Thames",
                     "Severn",
+                    "Thames",
                     "Clyde"
                 ],
-                "correctAnswerIndex": 0
+                "correctAnswerIndex": 1
             },
             {
                 "question": "Where is Big Ben located?",
@@ -77,7 +77,7 @@
                 "correctAnswerIndex": 1
             },
             {
-                "question": "Which author created the character of Peter Pan?",
+                "question": "Which author created Peter Pan?",
                 "answers": [
                     "J.M. Barrie",
                     "Enid Blyton",
@@ -86,7 +86,7 @@
                 "correctAnswerIndex": 0
             },
             {
-                "question": "What famous detective did Sir Arthur Conan Doyle create?",
+                "question": "What famous detective was created by Sir Arthur Conan Doyle?",
                 "answers": [
                     "Sherlock Holmes",
                     "Hercule Poirot",

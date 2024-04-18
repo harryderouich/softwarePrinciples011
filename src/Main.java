@@ -13,7 +13,6 @@ import com.opencsv.exceptions.CsvException;
 import services.Helper;
 import testPlatform.AdminPlatform;
 import testPlatform.UserPlatform;
-import testing.TestAccounts;
 import utils.FileHandling;
 import utils.InputReader;
 import utils.Menu;
@@ -26,9 +25,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
-// todo check that written certificate file writes while program is running
-// todo check what happens with partially empty csv for certificate creation
-
 public class Main {
     public static void main(String[] args) throws IOException, CsvException {
         // Boolean value to allow the entire system to run until the user chooses to quit
@@ -39,11 +35,6 @@ public class Main {
         InputReader input = new InputReader();
         Helper help = new Helper();
         Account loggedInAccount = null;
-
-        // Hard Coded Login details to save time
-        @SuppressWarnings("unused") TestAccounts testAccounts = new TestAccounts();
-        // loggedInAccount = new Account(testAccounts.createBusinessPlusAcc());
-        // End
 
         // Main program looping until user chooses to quit
         while (!quit) {
